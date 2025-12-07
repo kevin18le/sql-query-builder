@@ -1,13 +1,18 @@
 import gradio as gr
+from src.data_prep.data_prep import load_faiss_index
+
+FAISS_INDEX, SCHEMA_EMBEDDINGS = load_faiss_index()
 
 # Fireworks AI Model Configuration
+#EMBEDDING_MODEL = "accounts/derple/deployedModels/qwen3-embedding-0p6b-h11ots2t"
 EMBEDDING_MODEL = "accounts/fireworks/models/qwen3-embedding-8b"
 # TODO: allow user to choose from a list of models
-LLM_MODEL = "accounts/fireworks/models/qwen3-8b"
+LLM_MODEL = "accounts/fireworks/models/qwen-8b" # 
 RERANKER_MODEL = "accounts/fireworks/models/qwen3-reranker-8b"
 
 # API Constants
 COMPLETION_BASE_URL = "https://api.fireworks.ai/inference/v1"
+INFERENCE_BASE_URL = COMPLETION_BASE_URL  # Alias for consistency
 EMBEDDING_BASE_URL = "https://api.fireworks.ai/inference/v1/embeddings"
 RERANK_BASE_URL = "https://api.fireworks.ai/inference/v1/rerank"
 

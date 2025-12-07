@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2025-12-07T12:30:48.095669",
+    "input_sql": "-- get customer info on user 1\nselect * from cus",
+    "suggested_completion": "Error: 1 validation error for SqlCompletion\nsql\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.11/v/missing",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-07T12:52:44.942487",
+    "input_sql": "-- get the customer id, name, phone number for user 1\nselect ",
+    "suggested_completion": "select customer_id, name, phone_number from accounts where user_id = 1;",
+    "applied_autocomplete": 1
+  }
+]

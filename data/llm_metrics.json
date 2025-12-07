@@ -1,0 +1,47 @@
+[
+  {
+    "timestamp": "2025-12-07T12:30:48.093749",
+    "model": "accounts/fireworks/models/qwen3-8b",
+    "time_to_complete_seconds": 9.7877,
+    "time_to_first_token_seconds": 0.161,
+    "input_tokens": 205,
+    "output_tokens": 2048,
+    "total_tokens": 2253
+  },
+  {
+    "timestamp": "2025-12-07T12:35:58.166385",
+    "model": "accounts/fireworks/models/qwen3-8b",
+    "time_to_complete_seconds": 9.9642,
+    "time_to_first_token_seconds": 0.125,
+    "input_tokens": 206,
+    "output_tokens": 2048,
+    "total_tokens": 2254
+  },
+  {
+    "timestamp": "2025-12-07T12:39:34.545985",
+    "model": "accounts/fireworks/models/qwen3-8b",
+    "time_to_complete_seconds": 31.2713,
+    "time_to_first_token_seconds": 0.0106,
+    "input_tokens": 206,
+    "output_tokens": 2048,
+    "total_tokens": 2254
+  },
+  {
+    "timestamp": "2025-12-07T12:41:15.607331",
+    "model": "accounts/fireworks/models/qwen3-8b",
+    "time_to_complete_seconds": 6.443,
+    "time_to_first_token_seconds": 0.195,
+    "input_tokens": 84,
+    "output_tokens": 551,
+    "total_tokens": 635
+  },
+  {
+    "timestamp": "2025-12-07T12:51:37.061126",
+    "model": "accounts/fireworks/models/qwen3-8b",
+    "time_to_complete_seconds": 6.4199,
+    "time_to_first_token_seconds": 0.102,
+    "input_tokens": 236,
+    "output_tokens": 1194,
+    "total_tokens": 1430
+  }
+]

@@ -362,13 +362,21 @@ def build_faiss_index(embeddings: np.ndarray, output_dir: Path):
     # Add embeddings to index
     index.add(embeddings)
     
-    # Save index
-    index_path = output_dir / 'schema_index.faiss'
+    # Save index as binary file
+    index_path = output_dir / 'schema_index.bin'
     faiss.write_index(index, str(index_path))
     print(f"Saved FAISS index to {index_path}")
     print(f"Index contains {index.ntotal} vectors with dimension {dimension}")
     
     return index
+
+
+def save_embeddings(embeddings: np.ndarray, output_dir: Path):
+    """Save embeddings as a NumPy .npy file."""
+    embeddings_path = output_dir / 'embeddings.npy'
+    np.save(str(embeddings_path), embeddings)
+    print(f"Saved embeddings to {embeddings_path}")
+    print(f"Embeddings shape: {embeddings.shape} (num_vectors, dimension)")
 
 
 def main():
@@ -422,6 +430,9 @@ def main():
     embeddings = get_embeddings(texts, args.api_key)
     print(f"Generated {len(embeddings)} embeddings")
     
+    print("\nSaving embeddings...")
+    save_embeddings(embeddings, output_dir)
+    
     print("\nBuilding FAISS index...")
     index = build_faiss_index(embeddings, output_dir)
     
@@ -433,7 +444,8 @@ def main():
     
     print("\n✅ Schema index built successfully!")
     print(f"\nFiles created in {output_dir}:")
-    print(f"  - schema_index.faiss (FAISS index)")
+    print(f"  - embeddings.npy (embeddings array)")
+    print(f"  - schema_index.bin (FAISS index)")
     print(f"  - chunks_metadata.json (chunk metadata for retrieval)")
     print(f"  - table_info.json (full table information)")
 
