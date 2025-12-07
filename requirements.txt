@@ -1,0 +1,7 @@
+gradio==5.42.0
+datasets==4.2.0
+requests
+openai
+psycopg2-binary
+rank-bm25
+faiss-cpu

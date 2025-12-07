@@ -1,0 +1,857 @@
+[
+  {
+    "type": "table_overview",
+    "table_name": "accounts",
+    "content": "Table: accounts\nRow count: 85\n\nPrimary key(s): account_id\nUnique column(s): account_number",
+    "metadata": {
+      "row_count": 85,
+      "primary_keys": [
+        "account_id"
+      ],
+      "unique_columns": [
+        "account_number"
+      ]
+    }
+  },
+  {
+    "type": "columns",
+    "table_name": "accounts",
+    "content": "Table: accounts\nColumns:\n  - account_id: integer NOT NULL DEFAULT nextval('accounts_account_id_seq'::regclass)\n  - customer_id: integer NOT NULL\n  - account_number: text NOT NULL\n  - account_type: text NOT NULL\n  - currency: text NOT NULL DEFAULT 'USD'::text\n  - current_balance: numeric NOT NULL DEFAULT 0\n  - status: text NOT NULL\n  - opened_at: timestamp with time zone NOT NULL DEFAULT now()",
+    "metadata": {
+      "columns": [
+        {
+          "name": "account_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "account_number",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "account_type",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "currency",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "current_balance",
+          "data_type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "opened_at",
+          "data_type": "timestamp with time zone",
+          "nullable": false
+        }
+      ]
+    }
+  },
+  {
+    "type": "foreign_keys",
+    "table_name": "accounts",
+    "content": "Table: accounts\nForeign Key Relationships:\n  - customer_id -> customers.customer_id",
+    "metadata": {
+      "foreign_keys": [
+        {
+          "column": "customer_id",
+          "references_table": "customers",
+          "references_column": "customer_id",
+          "constraint_name": "accounts_customer_id_fkey"
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraints_indexes",
+    "table_name": "accounts",
+    "content": "Table: accounts\nCheck Constraints:\n  - accounts_account_type_check: (account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))\n  - accounts_status_check: (status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))\n  - accounts_account_type_check: (account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))\n  - accounts_status_check: (status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))\n  - accounts_account_id_not_null: account_id IS NOT NULL\n  - accounts_customer_id_not_null: customer_id IS NOT NULL\n  - accounts_account_number_not_null: account_number IS NOT NULL\n  - accounts_account_type_not_null: account_type IS NOT NULL\n  - accounts_currency_not_null: currency IS NOT NULL\n  - accounts_current_balance_not_null: current_balance IS NOT NULL\n  - accounts_status_not_null: status IS NOT NULL\n  - accounts_opened_at_not_null: opened_at IS NOT NULL\n  - accounts_account_id_not_null: account_id IS NOT NULL\n  - accounts_customer_id_not_null: customer_id IS NOT NULL\n  - accounts_account_number_not_null: account_number IS NOT NULL\n  - accounts_account_type_not_null: account_type IS NOT NULL\n  - accounts_currency_not_null: currency IS NOT NULL\n  - accounts_current_balance_not_null: current_balance IS NOT NULL\n  - accounts_status_not_null: status IS NOT NULL\n  - accounts_opened_at_not_null: opened_at IS NOT NULL\nIndexes:\n  - accounts_pkey: CREATE UNIQUE INDEX accounts_pkey ON public.accounts USING btree (account_id)\n  - accounts_account_number_key: CREATE UNIQUE INDEX accounts_account_number_key ON public.accounts USING btree (account_number)\n  - idx_accounts_customer_id: CREATE INDEX idx_accounts_customer_id ON public.accounts USING btree (customer_id)",
+    "metadata": {
+      "check_constraints": [
+        {
+          "name": "accounts_account_type_check",
+          "clause": "(account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))"
+        },
+        {
+          "name": "accounts_status_check",
+          "clause": "(status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))"
+        },
+        {
+          "name": "accounts_account_type_check",
+          "clause": "(account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))"
+        },
+        {
+          "name": "accounts_status_check",
+          "clause": "(status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))"
+        },
+        {
+          "name": "accounts_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "accounts_customer_id_not_null",
+          "clause": "customer_id IS NOT NULL"
+        },
+        {
+          "name": "accounts_account_number_not_null",
+          "clause": "account_number IS NOT NULL"
+        },
+        {
+          "name": "accounts_account_type_not_null",
+          "clause": "account_type IS NOT NULL"
+        },
+        {
+          "name": "accounts_currency_not_null",
+          "clause": "currency IS NOT NULL"
+        },
+        {
+          "name": "accounts_current_balance_not_null",
+          "clause": "current_balance IS NOT NULL"
+        },
+        {
+          "name": "accounts_status_not_null",
+          "clause": "status IS NOT NULL"
+        },
+        {
+          "name": "accounts_opened_at_not_null",
+          "clause": "opened_at IS NOT NULL"
+        },
+        {
+          "name": "accounts_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "accounts_customer_id_not_null",
+          "clause": "customer_id IS NOT NULL"
+        },
+        {
+          "name": "accounts_account_number_not_null",
+          "clause": "account_number IS NOT NULL"
+        },
+        {
+          "name": "accounts_account_type_not_null",
+          "clause": "account_type IS NOT NULL"
+        },
+        {
+          "name": "accounts_currency_not_null",
+          "clause": "currency IS NOT NULL"
+        },
+        {
+          "name": "accounts_current_balance_not_null",
+          "clause": "current_balance IS NOT NULL"
+        },
+        {
+          "name": "accounts_status_not_null",
+          "clause": "status IS NOT NULL"
+        },
+        {
+          "name": "accounts_opened_at_not_null",
+          "clause": "opened_at IS NOT NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "accounts_pkey",
+          "definition": "CREATE UNIQUE INDEX accounts_pkey ON public.accounts USING btree (account_id)"
+        },
+        {
+          "name": "accounts_account_number_key",
+          "definition": "CREATE UNIQUE INDEX accounts_account_number_key ON public.accounts USING btree (account_number)"
+        },
+        {
+          "name": "idx_accounts_customer_id",
+          "definition": "CREATE INDEX idx_accounts_customer_id ON public.accounts USING btree (customer_id)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "relationship",
+    "table_name": "accounts",
+    "content": "Relationship: accounts.customer_id references customers.customer_id",
+    "metadata": {
+      "from_table": "accounts",
+      "from_column": "customer_id",
+      "to_table": "customers",
+      "to_column": "customer_id"
+    }
+  },
+  {
+    "type": "table_overview",
+    "table_name": "cards",
+    "content": "Table: cards\nRow count: 65\n\nPrimary key(s): card_id",
+    "metadata": {
+      "row_count": 65,
+      "primary_keys": [
+        "card_id"
+      ],
+      "unique_columns": []
+    }
+  },
+  {
+    "type": "columns",
+    "table_name": "cards",
+    "content": "Table: cards\nColumns:\n  - card_id: integer NOT NULL DEFAULT nextval('cards_card_id_seq'::regclass)\n  - account_id: integer NOT NULL\n  - card_number_last4: character(4) NOT NULL\n  - network: text NOT NULL\n  - card_type: text NOT NULL\n  - issued_at: timestamp with time zone NOT NULL DEFAULT now()\n  - expires_at: date NOT NULL\n  - is_active: boolean NOT NULL DEFAULT true",
+    "metadata": {
+      "columns": [
+        {
+          "name": "card_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "account_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "card_number_last4",
+          "data_type": "character",
+          "nullable": false
+        },
+        {
+          "name": "network",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "card_type",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "issued_at",
+          "data_type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "expires_at",
+          "data_type": "date",
+          "nullable": false
+        },
+        {
+          "name": "is_active",
+          "data_type": "boolean",
+          "nullable": false
+        }
+      ]
+    }
+  },
+  {
+    "type": "foreign_keys",
+    "table_name": "cards",
+    "content": "Table: cards\nForeign Key Relationships:\n  - account_id -> accounts.account_id",
+    "metadata": {
+      "foreign_keys": [
+        {
+          "column": "account_id",
+          "references_table": "accounts",
+          "references_column": "account_id",
+          "constraint_name": "cards_account_id_fkey"
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraints_indexes",
+    "table_name": "cards",
+    "content": "Table: cards\nCheck Constraints:\n  - cards_network_check: (network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))\n  - cards_card_type_check: (card_type = ANY (ARRAY['debit'::text, 'credit'::text]))\n  - cards_network_check: (network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))\n  - cards_card_type_check: (card_type = ANY (ARRAY['debit'::text, 'credit'::text]))\n  - cards_network_not_null: network IS NOT NULL\n  - cards_card_type_not_null: card_type IS NOT NULL\n  - cards_card_id_not_null: card_id IS NOT NULL\n  - cards_account_id_not_null: account_id IS NOT NULL\n  - cards_card_number_last4_not_null: card_number_last4 IS NOT NULL\n  - cards_issued_at_not_null: issued_at IS NOT NULL\n  - cards_expires_at_not_null: expires_at IS NOT NULL\n  - cards_is_active_not_null: is_active IS NOT NULL\n  - cards_card_id_not_null: card_id IS NOT NULL\n  - cards_account_id_not_null: account_id IS NOT NULL\n  - cards_card_number_last4_not_null: card_number_last4 IS NOT NULL\n  - cards_network_not_null: network IS NOT NULL\n  - cards_card_type_not_null: card_type IS NOT NULL\n  - cards_issued_at_not_null: issued_at IS NOT NULL\n  - cards_expires_at_not_null: expires_at IS NOT NULL\n  - cards_is_active_not_null: is_active IS NOT NULL\nIndexes:\n  - cards_pkey: CREATE UNIQUE INDEX cards_pkey ON public.cards USING btree (card_id)\n  - idx_cards_account_id: CREATE INDEX idx_cards_account_id ON public.cards USING btree (account_id)",
+    "metadata": {
+      "check_constraints": [
+        {
+          "name": "cards_network_check",
+          "clause": "(network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))"
+        },
+        {
+          "name": "cards_card_type_check",
+          "clause": "(card_type = ANY (ARRAY['debit'::text, 'credit'::text]))"
+        },
+        {
+          "name": "cards_network_check",
+          "clause": "(network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))"
+        },
+        {
+          "name": "cards_card_type_check",
+          "clause": "(card_type = ANY (ARRAY['debit'::text, 'credit'::text]))"
+        },
+        {
+          "name": "cards_network_not_null",
+          "clause": "network IS NOT NULL"
+        },
+        {
+          "name": "cards_card_type_not_null",
+          "clause": "card_type IS NOT NULL"
+        },
+        {
+          "name": "cards_card_id_not_null",
+          "clause": "card_id IS NOT NULL"
+        },
+        {
+          "name": "cards_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "cards_card_number_last4_not_null",
+          "clause": "card_number_last4 IS NOT NULL"
+        },
+        {
+          "name": "cards_issued_at_not_null",
+          "clause": "issued_at IS NOT NULL"
+        },
+        {
+          "name": "cards_expires_at_not_null",
+          "clause": "expires_at IS NOT NULL"
+        },
+        {
+          "name": "cards_is_active_not_null",
+          "clause": "is_active IS NOT NULL"
+        },
+        {
+          "name": "cards_card_id_not_null",
+          "clause": "card_id IS NOT NULL"
+        },
+        {
+          "name": "cards_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "cards_card_number_last4_not_null",
+          "clause": "card_number_last4 IS NOT NULL"
+        },
+        {
+          "name": "cards_network_not_null",
+          "clause": "network IS NOT NULL"
+        },
+        {
+          "name": "cards_card_type_not_null",
+          "clause": "card_type IS NOT NULL"
+        },
+        {
+          "name": "cards_issued_at_not_null",
+          "clause": "issued_at IS NOT NULL"
+        },
+        {
+          "name": "cards_expires_at_not_null",
+          "clause": "expires_at IS NOT NULL"
+        },
+        {
+          "name": "cards_is_active_not_null",
+          "clause": "is_active IS NOT NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "cards_pkey",
+          "definition": "CREATE UNIQUE INDEX cards_pkey ON public.cards USING btree (card_id)"
+        },
+        {
+          "name": "idx_cards_account_id",
+          "definition": "CREATE INDEX idx_cards_account_id ON public.cards USING btree (account_id)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "relationship",
+    "table_name": "cards",
+    "content": "Relationship: cards.account_id references accounts.account_id",
+    "metadata": {
+      "from_table": "cards",
+      "from_column": "account_id",
+      "to_table": "accounts",
+      "to_column": "account_id"
+    }
+  },
+  {
+    "type": "table_overview",
+    "table_name": "customers",
+    "content": "Table: customers\nRow count: 50\n\nPrimary key(s): customer_id\nUnique column(s): email",
+    "metadata": {
+      "row_count": 50,
+      "primary_keys": [
+        "customer_id"
+      ],
+      "unique_columns": [
+        "email"
+      ]
+    }
+  },
+  {
+    "type": "columns",
+    "table_name": "customers",
+    "content": "Table: customers\nColumns:\n  - customer_id: integer NOT NULL DEFAULT nextval('customers_customer_id_seq'::regclass)\n  - full_name: text NOT NULL\n  - email: text NOT NULL\n  - phone_number: text\n  - date_of_birth: date\n  - address_line1: text\n  - city: text\n  - state: text\n  - postal_code: text\n  - ssn: text\n  - created_at: timestamp with time zone NOT NULL DEFAULT now()\n  - is_vip: boolean NOT NULL DEFAULT false",
+    "metadata": {
+      "columns": [
+        {
+          "name": "customer_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "full_name",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "email",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "phone_number",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "date_of_birth",
+          "data_type": "date",
+          "nullable": true
+        },
+        {
+          "name": "address_line1",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "city",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "state",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "postal_code",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "ssn",
+          "data_type": "text",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "is_vip",
+          "data_type": "boolean",
+          "nullable": false
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraints_indexes",
+    "table_name": "customers",
+    "content": "Table: customers\nCheck Constraints:\n  - customers_customer_id_not_null: customer_id IS NOT NULL\n  - customers_full_name_not_null: full_name IS NOT NULL\n  - customers_email_not_null: email IS NOT NULL\n  - customers_created_at_not_null: created_at IS NOT NULL\n  - customers_is_vip_not_null: is_vip IS NOT NULL\n  - customers_customer_id_not_null: customer_id IS NOT NULL\n  - customers_full_name_not_null: full_name IS NOT NULL\n  - customers_email_not_null: email IS NOT NULL\n  - customers_created_at_not_null: created_at IS NOT NULL\n  - customers_is_vip_not_null: is_vip IS NOT NULL\nIndexes:\n  - customers_pkey: CREATE UNIQUE INDEX customers_pkey ON public.customers USING btree (customer_id)\n  - customers_email_key: CREATE UNIQUE INDEX customers_email_key ON public.customers USING btree (email)",
+    "metadata": {
+      "check_constraints": [
+        {
+          "name": "customers_customer_id_not_null",
+          "clause": "customer_id IS NOT NULL"
+        },
+        {
+          "name": "customers_full_name_not_null",
+          "clause": "full_name IS NOT NULL"
+        },
+        {
+          "name": "customers_email_not_null",
+          "clause": "email IS NOT NULL"
+        },
+        {
+          "name": "customers_created_at_not_null",
+          "clause": "created_at IS NOT NULL"
+        },
+        {
+          "name": "customers_is_vip_not_null",
+          "clause": "is_vip IS NOT NULL"
+        },
+        {
+          "name": "customers_customer_id_not_null",
+          "clause": "customer_id IS NOT NULL"
+        },
+        {
+          "name": "customers_full_name_not_null",
+          "clause": "full_name IS NOT NULL"
+        },
+        {
+          "name": "customers_email_not_null",
+          "clause": "email IS NOT NULL"
+        },
+        {
+          "name": "customers_created_at_not_null",
+          "clause": "created_at IS NOT NULL"
+        },
+        {
+          "name": "customers_is_vip_not_null",
+          "clause": "is_vip IS NOT NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "customers_pkey",
+          "definition": "CREATE UNIQUE INDEX customers_pkey ON public.customers USING btree (customer_id)"
+        },
+        {
+          "name": "customers_email_key",
+          "definition": "CREATE UNIQUE INDEX customers_email_key ON public.customers USING btree (email)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_overview",
+    "table_name": "merchants",
+    "content": "Table: merchants\nRow count: 5\n\nPrimary key(s): merchant_id",
+    "metadata": {
+      "row_count": 5,
+      "primary_keys": [
+        "merchant_id"
+      ],
+      "unique_columns": []
+    }
+  },
+  {
+    "type": "columns",
+    "table_name": "merchants",
+    "content": "Table: merchants\nColumns:\n  - merchant_id: integer NOT NULL DEFAULT nextval('merchants_merchant_id_seq'::regclass)\n  - name: text NOT NULL\n  - category: text NOT NULL\n  - country: text NOT NULL\n  - risk_level: text NOT NULL",
+    "metadata": {
+      "columns": [
+        {
+          "name": "merchant_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "category",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "country",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "risk_level",
+          "data_type": "text",
+          "nullable": false
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraints_indexes",
+    "table_name": "merchants",
+    "content": "Table: merchants\nCheck Constraints:\n  - merchants_risk_level_check: (risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))\n  - merchants_risk_level_check: (risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))\n  - merchants_merchant_id_not_null: merchant_id IS NOT NULL\n  - merchants_name_not_null: name IS NOT NULL\n  - merchants_category_not_null: category IS NOT NULL\n  - merchants_country_not_null: country IS NOT NULL\n  - merchants_risk_level_not_null: risk_level IS NOT NULL\n  - merchants_merchant_id_not_null: merchant_id IS NOT NULL\n  - merchants_name_not_null: name IS NOT NULL\n  - merchants_category_not_null: category IS NOT NULL\n  - merchants_country_not_null: country IS NOT NULL\n  - merchants_risk_level_not_null: risk_level IS NOT NULL\nIndexes:\n  - merchants_pkey: CREATE UNIQUE INDEX merchants_pkey ON public.merchants USING btree (merchant_id)",
+    "metadata": {
+      "check_constraints": [
+        {
+          "name": "merchants_risk_level_check",
+          "clause": "(risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))"
+        },
+        {
+          "name": "merchants_risk_level_check",
+          "clause": "(risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))"
+        },
+        {
+          "name": "merchants_merchant_id_not_null",
+          "clause": "merchant_id IS NOT NULL"
+        },
+        {
+          "name": "merchants_name_not_null",
+          "clause": "name IS NOT NULL"
+        },
+        {
+          "name": "merchants_category_not_null",
+          "clause": "category IS NOT NULL"
+        },
+        {
+          "name": "merchants_country_not_null",
+          "clause": "country IS NOT NULL"
+        },
+        {
+          "name": "merchants_risk_level_not_null",
+          "clause": "risk_level IS NOT NULL"
+        },
+        {
+          "name": "merchants_merchant_id_not_null",
+          "clause": "merchant_id IS NOT NULL"
+        },
+        {
+          "name": "merchants_name_not_null",
+          "clause": "name IS NOT NULL"
+        },
+        {
+          "name": "merchants_category_not_null",
+          "clause": "category IS NOT NULL"
+        },
+        {
+          "name": "merchants_country_not_null",
+          "clause": "country IS NOT NULL"
+        },
+        {
+          "name": "merchants_risk_level_not_null",
+          "clause": "risk_level IS NOT NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "merchants_pkey",
+          "definition": "CREATE UNIQUE INDEX merchants_pkey ON public.merchants USING btree (merchant_id)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_overview",
+    "table_name": "transactions",
+    "content": "Table: transactions\nRow count: 98\n\nPrimary key(s): transaction_id",
+    "metadata": {
+      "row_count": 98,
+      "primary_keys": [
+        "transaction_id"
+      ],
+      "unique_columns": []
+    }
+  },
+  {
+    "type": "columns",
+    "table_name": "transactions",
+    "content": "Table: transactions\nColumns:\n  - transaction_id: integer NOT NULL DEFAULT nextval('transactions_transaction_id_seq'::regclass)\n  - account_id: integer NOT NULL\n  - card_id: integer\n  - merchant_id: integer\n  - amount: numeric NOT NULL\n  - currency: text NOT NULL DEFAULT 'USD'::text\n  - status: text NOT NULL\n  - transaction_type: text NOT NULL\n  - created_at: timestamp with time zone NOT NULL DEFAULT now()\n  - description: text",
+    "metadata": {
+      "columns": [
+        {
+          "name": "transaction_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "account_id",
+          "data_type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "card_id",
+          "data_type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "merchant_id",
+          "data_type": "integer",
+          "nullable": true
+        },
+        {
+          "name": "amount",
+          "data_type": "numeric",
+          "nullable": false
+        },
+        {
+          "name": "currency",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "transaction_type",
+          "data_type": "text",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "data_type": "timestamp with time zone",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "data_type": "text",
+          "nullable": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "foreign_keys",
+    "table_name": "transactions",
+    "content": "Table: transactions\nForeign Key Relationships:\n  - account_id -> accounts.account_id\n  - card_id -> cards.card_id\n  - merchant_id -> merchants.merchant_id",
+    "metadata": {
+      "foreign_keys": [
+        {
+          "column": "account_id",
+          "references_table": "accounts",
+          "references_column": "account_id",
+          "constraint_name": "transactions_account_id_fkey"
+        },
+        {
+          "column": "card_id",
+          "references_table": "cards",
+          "references_column": "card_id",
+          "constraint_name": "transactions_card_id_fkey"
+        },
+        {
+          "column": "merchant_id",
+          "references_table": "merchants",
+          "references_column": "merchant_id",
+          "constraint_name": "transactions_merchant_id_fkey"
+        }
+      ]
+    }
+  },
+  {
+    "type": "constraints_indexes",
+    "table_name": "transactions",
+    "content": "Table: transactions\nCheck Constraints:\n  - transactions_status_check: (status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))\n  - transactions_transaction_type_check: (transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))\n  - transactions_status_check: (status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))\n  - transactions_transaction_type_check: (transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))\n  - transactions_transaction_id_not_null: transaction_id IS NOT NULL\n  - transactions_account_id_not_null: account_id IS NOT NULL\n  - transactions_amount_not_null: amount IS NOT NULL\n  - transactions_currency_not_null: currency IS NOT NULL\n  - transactions_status_not_null: status IS NOT NULL\n  - transactions_transaction_type_not_null: transaction_type IS NOT NULL\n  - transactions_created_at_not_null: created_at IS NOT NULL\n  - transactions_transaction_id_not_null: transaction_id IS NOT NULL\n  - transactions_account_id_not_null: account_id IS NOT NULL\n  - transactions_amount_not_null: amount IS NOT NULL\n  - transactions_currency_not_null: currency IS NOT NULL\n  - transactions_status_not_null: status IS NOT NULL\n  - transactions_transaction_type_not_null: transaction_type IS NOT NULL\n  - transactions_created_at_not_null: created_at IS NOT NULL\nIndexes:\n  - transactions_pkey: CREATE UNIQUE INDEX transactions_pkey ON public.transactions USING btree (transaction_id)\n  - idx_tx_account_id_created_at: CREATE INDEX idx_tx_account_id_created_at ON public.transactions USING btree (account_id, created_at DESC)\n  - idx_tx_merchant_created_at: CREATE INDEX idx_tx_merchant_created_at ON public.transactions USING btree (merchant_id, created_at DESC)",
+    "metadata": {
+      "check_constraints": [
+        {
+          "name": "transactions_status_check",
+          "clause": "(status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))"
+        },
+        {
+          "name": "transactions_transaction_type_check",
+          "clause": "(transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))"
+        },
+        {
+          "name": "transactions_status_check",
+          "clause": "(status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))"
+        },
+        {
+          "name": "transactions_transaction_type_check",
+          "clause": "(transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))"
+        },
+        {
+          "name": "transactions_transaction_id_not_null",
+          "clause": "transaction_id IS NOT NULL"
+        },
+        {
+          "name": "transactions_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "transactions_amount_not_null",
+          "clause": "amount IS NOT NULL"
+        },
+        {
+          "name": "transactions_currency_not_null",
+          "clause": "currency IS NOT NULL"
+        },
+        {
+          "name": "transactions_status_not_null",
+          "clause": "status IS NOT NULL"
+        },
+        {
+          "name": "transactions_transaction_type_not_null",
+          "clause": "transaction_type IS NOT NULL"
+        },
+        {
+          "name": "transactions_created_at_not_null",
+          "clause": "created_at IS NOT NULL"
+        },
+        {
+          "name": "transactions_transaction_id_not_null",
+          "clause": "transaction_id IS NOT NULL"
+        },
+        {
+          "name": "transactions_account_id_not_null",
+          "clause": "account_id IS NOT NULL"
+        },
+        {
+          "name": "transactions_amount_not_null",
+          "clause": "amount IS NOT NULL"
+        },
+        {
+          "name": "transactions_currency_not_null",
+          "clause": "currency IS NOT NULL"
+        },
+        {
+          "name": "transactions_status_not_null",
+          "clause": "status IS NOT NULL"
+        },
+        {
+          "name": "transactions_transaction_type_not_null",
+          "clause": "transaction_type IS NOT NULL"
+        },
+        {
+          "name": "transactions_created_at_not_null",
+          "clause": "created_at IS NOT NULL"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "transactions_pkey",
+          "definition": "CREATE UNIQUE INDEX transactions_pkey ON public.transactions USING btree (transaction_id)"
+        },
+        {
+          "name": "idx_tx_account_id_created_at",
+          "definition": "CREATE INDEX idx_tx_account_id_created_at ON public.transactions USING btree (account_id, created_at DESC)"
+        },
+        {
+          "name": "idx_tx_merchant_created_at",
+          "definition": "CREATE INDEX idx_tx_merchant_created_at ON public.transactions USING btree (merchant_id, created_at DESC)"
+        }
+      ]
+    }
+  },
+  {
+    "type": "relationship",
+    "table_name": "transactions",
+    "content": "Relationship: transactions.account_id references accounts.account_id",
+    "metadata": {
+      "from_table": "transactions",
+      "from_column": "account_id",
+      "to_table": "accounts",
+      "to_column": "account_id"
+    }
+  },
+  {
+    "type": "relationship",
+    "table_name": "transactions",
+    "content": "Relationship: transactions.card_id references cards.card_id",
+    "metadata": {
+      "from_table": "transactions",
+      "from_column": "card_id",
+      "to_table": "cards",
+      "to_column": "card_id"
+    }
+  },
+  {
+    "type": "relationship",
+    "table_name": "transactions",
+    "content": "Relationship: transactions.merchant_id references merchants.merchant_id",
+    "metadata": {
+      "from_table": "transactions",
+      "from_column": "merchant_id",
+      "to_table": "merchants",
+      "to_column": "merchant_id"
+    }
+  }
+]
