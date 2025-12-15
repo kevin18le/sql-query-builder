@@ -1,16 +1,9 @@
-# TODO: CREATE A DEPLOYMENT ON FIREWORKS AI FOR BETTER PERFORMANCE
-# TODO: TRACK AND EXPORT PERFORMANCE METRICS
-# TODO: ADD FEW-SHOT EXAMPLES TO THE SYSTEM PROMPT
 # TODO: INFERENCE PERFORMANCE OPTIMIZATION (try to get sub-second latency)
-# NICE TO HAVE: TELEMETRY LOGGING TO CREATE RFT DATASET
-
-import os
 import re
 import json
 import time
 from datetime import datetime
 from pydantic import BaseModel
-import yaml
 from openai import OpenAI
 from dotenv import load_dotenv
 from typing import List, Dict, Optional
@@ -21,18 +14,6 @@ from src.search.vector_search import search_vector
 load_dotenv()
 
 _FILE_PATH = Path(__file__).parents[2]
-
-# TODO: create a prompt library yaml file (if needed)
-def load_prompt_library():
-    """Load prompts from YAML configuration."""
-    prompt_file = _FILE_PATH / "configs" / "prompt_library.yaml"
-    if prompt_file.exists():
-        with open(prompt_file, "r") as f:
-            return yaml.safe_load(f)
-    return {}
-
-
-PROMPT_LIBRARY = load_prompt_library()
 
 ### Performance Metrics Tracking ###
 _METRICS_STORAGE = []
@@ -274,12 +255,12 @@ def get_interactions_summary() -> Dict:
         "apply_rate_percent": round(apply_rate, 2),
     }
 
-def export_interactions(format: str = "json") -> str:
+def export_interactions(format: str = "jsonl") -> str:
     """
     Export interaction logs to a file for fine-tuning.
     
     Args:
-        format: Export format - "json" (default: "json")
+        format: Export format - "jsonl" (default: "jsonl")
     
     Returns:
         Path to the exported file
@@ -287,19 +268,16 @@ def export_interactions(format: str = "json") -> str:
     all_interactions = get_all_interactions()
     summary = get_interactions_summary()
     
-    if format.lower() == "json":
-        export_file = _INTERACTIONS_FILE.parent / f"interactions_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    if format.lower() == "jsonl":
+        export_file = _INTERACTIONS_FILE.parent / f"interactions_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jsonl"
         
-        export_data = {
-            "export_timestamp": datetime.now().isoformat(),
-            "summary": summary,
-            "interactions": all_interactions
-        }
-        
+        # Write each interaction as a separate JSON line (JSONL format)
         with open(export_file, 'w') as f:
-            json.dump(export_data, f, indent=2)
+            for interaction in all_interactions:
+                # Write each interaction as a single JSON line
+                f.write(json.dumps(interaction) + '\n')
     else:
-        raise ValueError(f"Unsupported export format: {format}. Only 'json' is supported.")
+        raise ValueError(f"Unsupported export format: {format}. Only 'jsonl' is supported.")
     
     return str(export_file)
 
@@ -440,21 +418,34 @@ Return only the continuation of PARTIAL_SQL."""
     start_time = time.time()
     
     # Use with_raw_response to access headers for performance metrics
-    raw_response = client.chat.completions.with_raw_response.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ],
-        temperature=0.0,
-        response_format={
-            "type": "json_schema",
-            "json_schema": {
-                "name": "SqlCompletion",
-                "schema": SqlCompletion.model_json_schema()
+    try:
+        raw_response = client.chat.completions.with_raw_response.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.0,
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "SqlCompletion",
+                    "schema": SqlCompletion.model_json_schema()
+                }
             }
-        }
-    )
+        )
+    except Exception as api_error:
+        # Handle 404 errors (model not found)
+        status_code = getattr(api_error, 'status_code', None)
+        error_type = type(api_error).__name__
+        
+        if status_code == 404 or error_type == 'NotFoundError':
+            raise ValueError(
+                f"LLM model not found: {model}. "
+                f"Please check that the model name is correct and available."
+            ) from api_error
+        # Re-raise other API errors with original exception
+        raise
     
     # Calculate total time to complete
     time_to_complete = time.time() - start_time
@@ -507,31 +498,59 @@ Return only the continuation of PARTIAL_SQL."""
             error_msg += f"\nResponse content (first 500 chars): {content[:500]}"
         raise ValueError(error_msg) from e
 
+def format_retrieved_context(results: List[Dict]) -> str:
+    """
+    Format retrieved context with document separators for display.
+    
+    Args:
+        results: List of search results from vector search
+    
+    Returns:
+        Formatted context string with '# Document {x}' separators
+    """
+    if not results:
+        return ""
+    
+    formatted_parts = []
+    for idx, r in enumerate(results, start=1):
+        # Add document separator
+        formatted_parts.append(f"# Document {idx}")
+        
+        attrs = r.get('attributes', {})
+        parts = [f"Table: {r['table_name']}"]
+        
+        # Add the content of the retrieved document
+        parts.append(f"Content: {r.get('content', '')}")
+        # Add all attributes from the retrieved document regardless of chunk type
+        for attr_key, attr_value in attrs.items():
+            if isinstance(attr_value, (list, dict)):
+                parts.append(f"{attr_key}: {attr_value}")
+            else:
+                parts.append(f"{attr_key}: {attr_value}")
+        
+        parts.append("")  # Empty line separator
+        parts.append(f"Score: {r.get('score', '')}")
+        formatted_parts.append("\n".join(parts))
+    
+    return "\n\n".join(formatted_parts)
+
+
 def complete_sql(api_key, model, partial_sql, use_retrieval: bool = False, top_k: int = 5):
+    """
+    Complete SQL query with optional schema retrieval.
+    
+    Returns:
+        Tuple of (completion_string, formatted_context_string)
+        If use_retrieval is False, context_string will be empty
+    """
+    retrieved_context = ""
     if use_retrieval:
         # Retrieve schema context efficiently
         results = search_vector(partial_sql, top_k, api_key=api_key)
-        
-        # Build schema context string more efficiently using list comprehension
-        # Only include attributes that exist to avoid KeyError
-        context_parts = []
-        for r in results:
-            attrs = r.get('attributes', {})
-            parts = [r['table_name']]
-            
-            # Only add attributes if they exist (for table_overview chunks)
-            if 'row_count' in attrs:
-                parts.append(f"Row count: {attrs['row_count']}")
-            if 'primary_keys' in attrs:
-                parts.append(f"Primary keys: {attrs['primary_keys']}")
-            if 'unique_columns' in attrs:
-                parts.append(f"Unique columns: {attrs['unique_columns']}")
-            
-            parts.append("")  # Empty line separator
-            parts.append(r.get('content', ''))
-            context_parts.append("\n".join(parts))
-        
-        schema_context = "\n\n".join(context_parts)
+        # Format context for display with document separators
+        retrieved_context = format_retrieved_context(results)
     else:
-        schema_context = None
-    return complete_partial_sql(api_key, model, partial_sql, schema_context)
+        retrieved_context = None
+    
+    completion = complete_partial_sql(api_key, model, partial_sql, retrieved_context)
+    return completion, retrieved_context

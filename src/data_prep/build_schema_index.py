@@ -356,8 +356,8 @@ def build_faiss_index(embeddings: np.ndarray, output_dir: Path):
     # Get embedding dimension
     dimension = embeddings.shape[1]
     
-    # Create FAISS index (using L2 distance - Inner Product is also common)
-    index = faiss.IndexFlatL2(dimension)
+    # Create FAISS index (using Inner Product - L2 distance is also common)
+    index = faiss.IndexFlatIP(dimension)
     
     # Add embeddings to index
     index.add(embeddings)

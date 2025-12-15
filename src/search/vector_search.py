@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import List, Dict, Any
 from openai import OpenAI
 from dotenv import load_dotenv
-from src.config import FAISS_INDEX, EMBEDDING_MODEL, EMBEDDING_BASE_URL
+from src.config import FAISS_INDEX, EMBEDDING_MODEL, INFERENCE_BASE_URL
 
 load_dotenv()
 
@@ -22,17 +22,10 @@ def _load_chunks_metadata() -> List[Dict[str, Any]]:
 
 _CHUNKS_METADATA = _load_chunks_metadata()
 
-# Cache embeddings for queries (LRU cache with max size)
-# Key: (query_text, api_key), Value: embedding vector
-_EMBEDDING_CACHE: Dict[tuple, List[float]] = {}
-_MAX_CACHE_SIZE = 100  # Limit cache size to prevent memory issues
-
-
 ### Embedding and Reranking Utilities ###
 def get_embedding(text: str, api_key: str = None) -> List[float]:
     """
     Get embedding for a given text using Fireworks AI embedding model.
-    Uses caching to avoid redundant API calls for the same query.
 
     Args:
         text: Input text to embed
@@ -51,15 +44,10 @@ def get_embedding(text: str, api_key: str = None) -> List[float]:
     if api_key is None:
         raise ValueError("FIREWORKS_API_KEY not found. Please provide it as an argument or set it as an environment variable.")
     
-    # Check cache first
-    cache_key = (text, api_key)
-    if cache_key in _EMBEDDING_CACHE:
-        return _EMBEDDING_CACHE[cache_key]
-    
     # Create client and make API call
     client = OpenAI(
         api_key=api_key,
-        base_url=EMBEDDING_BASE_URL,
+        base_url=INFERENCE_BASE_URL,
     )
     
     try:
@@ -90,13 +78,6 @@ def get_embedding(text: str, api_key: str = None) -> List[float]:
     
     if not embedding or len(embedding) == 0:
         raise ValueError("Invalid embedding returned: empty embedding vector")
-    
-    # Cache the result (with size limit using simple FIFO eviction)
-    if len(_EMBEDDING_CACHE) >= _MAX_CACHE_SIZE:
-        # Remove oldest entry (first key in dict for Python 3.7+)
-        _EMBEDDING_CACHE.pop(next(iter(_EMBEDDING_CACHE)))
-    
-    _EMBEDDING_CACHE[cache_key] = embedding
     
     return embedding
 
@@ -174,18 +155,14 @@ def search_vector(query: str, top_k: int = 3, api_key: str = None) -> List[Dict[
 
     faiss.normalize_L2(query_vector)
     faiss_index = FAISS_INDEX
-    distances, indices = faiss_index.search(query_vector, top_k)
 
-    # Convert L2 distances to similarity scores (0-1 range)
-    # After normalization, L2 distance = 2 * (1 - cosine_similarity)
-    # So cosine_similarity = 1 - (L2_distance / 2)
-    similarity_scores = 1 - (distances[0] / 2)
+    # Return cosine similarities instead of L2 distances
+    distances, indices = faiss_index.search(query_vector, top_k)
 
     # Pre-allocate results list for better performance
     results = []
-    results_append = results.append  # Cache method reference
     
-    for idx, score in zip(indices[0], similarity_scores):
+    for idx, score in zip(indices[0], distances[0]):
         chunk = _CHUNKS_METADATA[idx]
         metadata = chunk.get("metadata", {})
         
@@ -246,8 +223,7 @@ def search_vector(query: str, top_k: int = 3, api_key: str = None) -> List[Dict[
                 "to_column": metadata.get("to_column"),
             }
         
-        results_append(result)
-    
+        results.append(result)
     return results
 
 

@@ -1,4 +1,4 @@
-from src.config import LLM_MODEL, GRADIO_THEME, CUSTOM_CSS
+from src.config import GRADIO_THEME, CUSTOM_CSS, LLM_MODEL_OPTIONS
 import gradio as gr
 from src.fireworks.inference import (
     complete_sql, 
@@ -14,7 +14,8 @@ def generate_completion(
     api_key: str, 
     model: str, 
     partial_sql: str, 
-    use_retrieval: bool = True
+    use_retrieval: bool = True,
+    top_k: int = 3
 ):
     """
     Generate SQL completion without applying it.
@@ -24,30 +25,31 @@ def generate_completion(
         model: Model name to use
         partial_sql: Partial SQL query to complete
         use_retrieval: Whether to use schema retrieval for context
+        top_k: Number of top results to retrieve (default: 3)
     
     Returns:
-        Tuple of (suggested_completion, visibility_update_for_apply_buttons)
+        Tuple of (suggested_completion, retrieved_context, visibility_update_for_apply_buttons)
     """
     if not partial_sql:
-        return "", gr.update(visible=False)
+        return "", "", gr.update(visible=False)
     
     try:
-        suggested_completion = complete_sql(
+        suggested_completion, retrieved_context = complete_sql(
             api_key=api_key,
             model=model,
             partial_sql=partial_sql,
             use_retrieval=use_retrieval,
-            top_k=3
+            top_k=top_k
         )
         
         # Show the apply buttons if we got a valid completion (not an error)
         if suggested_completion.startswith("Error:"):
-            return suggested_completion, gr.update(visible=False)
+            return suggested_completion, retrieved_context, gr.update(visible=False)
         else:
-            return suggested_completion, gr.update(visible=True)
+            return suggested_completion, retrieved_context, gr.update(visible=True)
     except Exception as e:
         error_msg = f"Error: {str(e)}"
-        return error_msg, gr.update(visible=False)
+        return error_msg, "", gr.update(visible=False)
 
 
 def apply_completion_choice(
@@ -118,7 +120,7 @@ def export_interaction_logs():
         if summary.get("total_interactions", 0) == 0:
             return gr.update(value=None, visible=False), "No interactions to export. Use autocomplete first and log some interactions."
         
-        file_path = export_interactions(format="json")
+        file_path = export_interactions(format="jsonl")
         status_msg = f"✅ Interactions exported successfully! ({summary['total_interactions']} interactions, {summary.get('apply_rate_percent', 0)}% apply rate)"
         return gr.update(value=file_path, visible=True), status_msg
     except Exception as e:
@@ -126,75 +128,96 @@ def export_interaction_logs():
 
 
 with gr.Blocks(theme=GRADIO_THEME, css=CUSTOM_CSS, title="SQL Autocomplete") as demo:
-    gr.Markdown("## SQL Autocomplete")
-    gr.Markdown("Enter your partial SQL query to get autocomplete suggestions.")
+    gr.Markdown("## SQL Autocomplete", elem_id="title-markdown")
+    gr.Markdown("Enter your partial SQL query to get autocomplete suggestions.", elem_id="subtitle-markdown")
     
     api_key = gr.Textbox(label="Fireworks API key", type="password", placeholder="Enter your Fireworks API key")
-    model = gr.Dropdown([LLM_MODEL], value=LLM_MODEL, label="Model")
+    model = gr.Dropdown(LLM_MODEL_OPTIONS, value=LLM_MODEL_OPTIONS[0], label="Select a model")
     
+    # Main SQL editor, autocomplete, and context in three columns
     with gr.Row():
-        with gr.Column(scale=2):
+        with gr.Column():
             partial_sql = gr.Textbox(
                 lines=10, 
-                label="Partial SQL Query",
+                label="SQL Editor",
                 placeholder="Enter your partial SQL query here...",
                 elem_id="sql-textbox"
             )
-            
+        
+        with gr.Column():
+            output = gr.Textbox(
+                label="Suggested Completion", 
+                lines=10,
+                interactive=False,
+            )
+        
+        with gr.Column():
+            retrieved_context = gr.Textbox(
+                label="Retrieved Context",
+                lines=10,
+                interactive=False,
+                visible=True,
+            )
+    
+    # Retrieval Parameters section
+    with gr.Group():
+        gr.Markdown("### Retrieval Parameters")
+        with gr.Row():
             use_retrieval = gr.Checkbox(
                 label="Use Schema Retrieval",
                 value=True,
                 info="Retrieve relevant schema information for better context"
             )
-            
-            btn = gr.Button("Get Autocomplete", variant="primary")
-            
-            # Apply buttons (initially hidden, shown after completion is generated)
-            with gr.Row(visible=False) as apply_buttons:
-                apply_yes_btn = gr.Button("Yes, Apply", variant="primary", size="sm")
-                apply_no_btn = gr.Button("No, Don't Apply", variant="secondary", size="sm")
-            
-            with gr.Row():
-                export_metrics_btn = gr.Button("Export Performance Metrics", variant="secondary")
-                export_metrics_file = gr.File(
-                    label="Download Metrics",
-                    visible=False,
-                    interactive=False
-                )
+            top_k = gr.Number(
+                label="Top K",
+                value=5,
+                minimum=1,
+                maximum=20,
+                step=1,
+                info="Number of top schema documents to retrieve"
+            )
+    
+    btn = gr.Button("Get Autocomplete", variant="primary")
+    
+    # Apply buttons (initially hidden, shown after completion is generated)
+    with gr.Row(visible=False) as apply_buttons:
+        apply_yes_btn = gr.Button("Yes, Apply", variant="primary", size="sm")
+        apply_no_btn = gr.Button("No, Don't Apply", variant="secondary", size="sm")
+    
+    with gr.Row():
+        with gr.Column():
+            export_metrics_btn = gr.Button("Export Performance Metrics", variant="secondary")
+            export_metrics_file = gr.File(
+                label="Download Metrics",
+                visible=False,
+                interactive=False
+            )
             export_metrics_status = gr.Textbox(
                 label="Metrics Export Status",
                 interactive=False,
                 visible=True,
                 value=""
             )
-            
-            with gr.Row():
-                export_interactions_btn = gr.Button("Export Autocomplete Interactions", variant="secondary")
-                export_interactions_file = gr.File(
-                    label="Download Interactions",
-                    visible=False,
-                    interactive=False
-                )
+        
+        with gr.Column():
+            export_interactions_btn = gr.Button("Export Autocomplete Interactions", variant="secondary")
+            export_interactions_file = gr.File(
+                label="Download Interactions",
+                visible=False,
+                interactive=False
+            )
             export_interactions_status = gr.Textbox(
                 label="Interactions Export Status",
                 interactive=False,
                 visible=True,
                 value=""
             )
-            
-        with gr.Column(scale=1):
-            output = gr.Textbox(
-                label="Suggested Completion", 
-                lines=12,
-                interactive=False,
-                info="Suggested SQL completion"
-            )
     
     # Main autocomplete action - generates completion and shows apply buttons
     btn.click(
         generate_completion,
-        inputs=[api_key, model, partial_sql, use_retrieval],
-        outputs=[output, apply_buttons]
+        inputs=[api_key, model, partial_sql, use_retrieval, top_k],
+        outputs=[output, retrieved_context, apply_buttons]
     )
     
     # Apply Yes button - applies completion and logs interaction

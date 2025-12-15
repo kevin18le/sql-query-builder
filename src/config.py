@@ -7,7 +7,13 @@ FAISS_INDEX, SCHEMA_EMBEDDINGS = load_faiss_index()
 #EMBEDDING_MODEL = "accounts/derple/deployedModels/qwen3-embedding-0p6b-h11ots2t"
 EMBEDDING_MODEL = "accounts/fireworks/models/qwen3-embedding-8b"
 # TODO: allow user to choose from a list of models
-LLM_MODEL = "accounts/fireworks/models/qwen-8b" # 
+LLM_MODEL = "accounts/fireworks/models/qwen3-8b"  # Fixed: changed from qwen-8b to qwen3-8b to match naming pattern
+LLM_MODEL_OPTIONS = [
+    "accounts/fireworks/models/qwen3-8b",
+    #"accounts/fireworks/models/qwen3-235b-a22b",
+    "accounts/fireworks/models/llama-v3p3-70b-instruct",
+    "accounts/fireworks/models/kimi-k2-instruct-0905"
+]
 RERANKER_MODEL = "accounts/fireworks/models/qwen3-reranker-8b"
 
 # API Constants
@@ -40,6 +46,8 @@ GRADIO_THEME = gr.themes.Base(
     block_background_fill="#FFFFFF",
     input_background_fill="#FFFFFF",
     border_color_primary="#E6EAF4",
+    body_text_color="#334155",
+    body_text_color_subdued="#64748B",
 )
 
 
@@ -62,6 +70,43 @@ CUSTOM_CSS = """
     text-align: center;
     font-size: 1.1em;
     margin-top: 0;
+}
+/* Darker title and subtitle for better contrast */
+#title-markdown,
+#title-markdown *,
+#title-markdown h2,
+#title-markdown h1,
+#title-markdown h3 {
+    color: #1E293B !important;
+    font-weight: 700 !important;
+}
+#subtitle-markdown,
+#subtitle-markdown *,
+#subtitle-markdown p,
+#subtitle-markdown span,
+#subtitle-markdown div {
+    color: #334155 !important;
+}
+/* Also target by Gradio's internal structure */
+.gradio-container .markdown h2,
+.gradio-container .prose h2,
+.gradio-container [data-testid="markdown"] h2 {
+    color: #1E293B !important;
+    font-weight: 700 !important;
+}
+.gradio-container .markdown p,
+.gradio-container .prose p,
+.gradio-container [data-testid="markdown"] p {
+    color: #334155 !important;
+}
+/* Universal fallback for markdown content */
+div[id*="markdown"] h2,
+div[id*="markdown"] h1 {
+    color: #1E293B !important;
+}
+div[id*="markdown"] p,
+div[id*="markdown"] {
+    color: #334155 !important;
 }
 .search-box {
     border: 2px solid #E6EAF4;
@@ -199,5 +244,26 @@ button.primary {
 button.primary:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(103, 32, 255, 0.25) !important;
+}
+/* Label and info text styling - make them white/light for readability */
+.gr-form label,
+.gr-form .label-wrap,
+.gr-form .wrap label,
+.gr-form .wrap .label-wrap,
+.gr-form .info,
+.gr-form [class*="info"],
+.gr-form .wrap .info,
+.gr-form .wrap label ~ .info,
+.gr-form label ~ span[class*="info"],
+.gr-form .wrap > .info,
+.gr-form .wrap > label ~ .info,
+span[class*="info"],
+.gr-form span[class*="info-text"],
+.gr-form .wrap > div > .info,
+.gr-form .wrap > div > label ~ .info,
+.gr-form .wrap label + .info,
+.gr-form .wrap .label-wrap ~ .info {
+    color: #FFFFFF !important;
+    opacity: 1 !important;
 }
 """
