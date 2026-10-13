@@ -84,83 +84,19 @@
     "check_constraints": [
       {
         "name": "accounts_account_type_check",
-        "clause": "(account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))"
-      },
-      {
-        "name": "accounts_status_check",
-        "clause": "(status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))"
+        "clause": "((account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text])))"
       },
       {
         "name": "accounts_account_type_check",
-        "clause": "(account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text]))"
+        "clause": "((account_type = ANY (ARRAY['checking'::text, 'savings'::text, 'credit'::text])))"
       },
       {
         "name": "accounts_status_check",
-        "clause": "(status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text]))"
+        "clause": "((status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text])))"
       },
       {
-        "name": "accounts_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "accounts_customer_id_not_null",
-        "clause": "customer_id IS NOT NULL"
-      },
-      {
-        "name": "accounts_account_number_not_null",
-        "clause": "account_number IS NOT NULL"
-      },
-      {
-        "name": "accounts_account_type_not_null",
-        "clause": "account_type IS NOT NULL"
-      },
-      {
-        "name": "accounts_currency_not_null",
-        "clause": "currency IS NOT NULL"
-      },
-      {
-        "name": "accounts_current_balance_not_null",
-        "clause": "current_balance IS NOT NULL"
-      },
-      {
-        "name": "accounts_status_not_null",
-        "clause": "status IS NOT NULL"
-      },
-      {
-        "name": "accounts_opened_at_not_null",
-        "clause": "opened_at IS NOT NULL"
-      },
-      {
-        "name": "accounts_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "accounts_customer_id_not_null",
-        "clause": "customer_id IS NOT NULL"
-      },
-      {
-        "name": "accounts_account_number_not_null",
-        "clause": "account_number IS NOT NULL"
-      },
-      {
-        "name": "accounts_account_type_not_null",
-        "clause": "account_type IS NOT NULL"
-      },
-      {
-        "name": "accounts_currency_not_null",
-        "clause": "currency IS NOT NULL"
-      },
-      {
-        "name": "accounts_current_balance_not_null",
-        "clause": "current_balance IS NOT NULL"
-      },
-      {
-        "name": "accounts_status_not_null",
-        "clause": "status IS NOT NULL"
-      },
-      {
-        "name": "accounts_opened_at_not_null",
-        "clause": "opened_at IS NOT NULL"
+        "name": "accounts_status_check",
+        "clause": "((status = ANY (ARRAY['active'::text, 'frozen'::text, 'closed'::text])))"
       }
     ],
     "indexes": [
@@ -261,84 +197,20 @@
     "unique_columns": [],
     "check_constraints": [
       {
-        "name": "cards_network_check",
-        "clause": "(network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))"
+        "name": "cards_card_type_check",
+        "clause": "((card_type = ANY (ARRAY['debit'::text, 'credit'::text])))"
       },
       {
         "name": "cards_card_type_check",
-        "clause": "(card_type = ANY (ARRAY['debit'::text, 'credit'::text]))"
+        "clause": "((card_type = ANY (ARRAY['debit'::text, 'credit'::text])))"
       },
       {
         "name": "cards_network_check",
-        "clause": "(network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text]))"
+        "clause": "((network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text])))"
       },
       {
-        "name": "cards_card_type_check",
-        "clause": "(card_type = ANY (ARRAY['debit'::text, 'credit'::text]))"
-      },
-      {
-        "name": "cards_network_not_null",
-        "clause": "network IS NOT NULL"
-      },
-      {
-        "name": "cards_card_type_not_null",
-        "clause": "card_type IS NOT NULL"
-      },
-      {
-        "name": "cards_card_id_not_null",
-        "clause": "card_id IS NOT NULL"
-      },
-      {
-        "name": "cards_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "cards_card_number_last4_not_null",
-        "clause": "card_number_last4 IS NOT NULL"
-      },
-      {
-        "name": "cards_issued_at_not_null",
-        "clause": "issued_at IS NOT NULL"
-      },
-      {
-        "name": "cards_expires_at_not_null",
-        "clause": "expires_at IS NOT NULL"
-      },
-      {
-        "name": "cards_is_active_not_null",
-        "clause": "is_active IS NOT NULL"
-      },
-      {
-        "name": "cards_card_id_not_null",
-        "clause": "card_id IS NOT NULL"
-      },
-      {
-        "name": "cards_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "cards_card_number_last4_not_null",
-        "clause": "card_number_last4 IS NOT NULL"
-      },
-      {
-        "name": "cards_network_not_null",
-        "clause": "network IS NOT NULL"
-      },
-      {
-        "name": "cards_card_type_not_null",
-        "clause": "card_type IS NOT NULL"
-      },
-      {
-        "name": "cards_issued_at_not_null",
-        "clause": "issued_at IS NOT NULL"
-      },
-      {
-        "name": "cards_expires_at_not_null",
-        "clause": "expires_at IS NOT NULL"
-      },
-      {
-        "name": "cards_is_active_not_null",
-        "clause": "is_active IS NOT NULL"
+        "name": "cards_network_check",
+        "clause": "((network = ANY (ARRAY['Visa'::text, 'Mastercard'::text, 'Amex'::text])))"
       }
     ],
     "indexes": [
@@ -460,48 +332,7 @@
     "unique_columns": [
       "email"
     ],
-    "check_constraints": [
-      {
-        "name": "customers_customer_id_not_null",
-        "clause": "customer_id IS NOT NULL"
-      },
-      {
-        "name": "customers_full_name_not_null",
-        "clause": "full_name IS NOT NULL"
-      },
-      {
-        "name": "customers_email_not_null",
-        "clause": "email IS NOT NULL"
-      },
-      {
-        "name": "customers_created_at_not_null",
-        "clause": "created_at IS NOT NULL"
-      },
-      {
-        "name": "customers_is_vip_not_null",
-        "clause": "is_vip IS NOT NULL"
-      },
-      {
-        "name": "customers_customer_id_not_null",
-        "clause": "customer_id IS NOT NULL"
-      },
-      {
-        "name": "customers_full_name_not_null",
-        "clause": "full_name IS NOT NULL"
-      },
-      {
-        "name": "customers_email_not_null",
-        "clause": "email IS NOT NULL"
-      },
-      {
-        "name": "customers_created_at_not_null",
-        "clause": "created_at IS NOT NULL"
-      },
-      {
-        "name": "customers_is_vip_not_null",
-        "clause": "is_vip IS NOT NULL"
-      }
-    ],
+    "check_constraints": [],
     "indexes": [
       {
         "name": "customers_pkey",
@@ -566,51 +397,11 @@
     "check_constraints": [
       {
         "name": "merchants_risk_level_check",
-        "clause": "(risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))"
+        "clause": "((risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))"
       },
       {
         "name": "merchants_risk_level_check",
-        "clause": "(risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text]))"
-      },
-      {
-        "name": "merchants_merchant_id_not_null",
-        "clause": "merchant_id IS NOT NULL"
-      },
-      {
-        "name": "merchants_name_not_null",
-        "clause": "name IS NOT NULL"
-      },
-      {
-        "name": "merchants_category_not_null",
-        "clause": "category IS NOT NULL"
-      },
-      {
-        "name": "merchants_country_not_null",
-        "clause": "country IS NOT NULL"
-      },
-      {
-        "name": "merchants_risk_level_not_null",
-        "clause": "risk_level IS NOT NULL"
-      },
-      {
-        "name": "merchants_merchant_id_not_null",
-        "clause": "merchant_id IS NOT NULL"
-      },
-      {
-        "name": "merchants_name_not_null",
-        "clause": "name IS NOT NULL"
-      },
-      {
-        "name": "merchants_category_not_null",
-        "clause": "category IS NOT NULL"
-      },
-      {
-        "name": "merchants_country_not_null",
-        "clause": "country IS NOT NULL"
-      },
-      {
-        "name": "merchants_risk_level_not_null",
-        "clause": "risk_level IS NOT NULL"
+        "clause": "((risk_level = ANY (ARRAY['low'::text, 'medium'::text, 'high'::text])))"
       }
     ],
     "indexes": [
@@ -732,75 +523,19 @@
     "check_constraints": [
       {
         "name": "transactions_status_check",
-        "clause": "(status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))"
-      },
-      {
-        "name": "transactions_transaction_type_check",
-        "clause": "(transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))"
+        "clause": "((status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text])))"
       },
       {
         "name": "transactions_status_check",
-        "clause": "(status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text]))"
+        "clause": "((status = ANY (ARRAY['pending'::text, 'completed'::text, 'reversed'::text])))"
       },
       {
         "name": "transactions_transaction_type_check",
-        "clause": "(transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text]))"
+        "clause": "((transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text])))"
       },
       {
-        "name": "transactions_transaction_id_not_null",
-        "clause": "transaction_id IS NOT NULL"
-      },
-      {
-        "name": "transactions_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "transactions_amount_not_null",
-        "clause": "amount IS NOT NULL"
-      },
-      {
-        "name": "transactions_currency_not_null",
-        "clause": "currency IS NOT NULL"
-      },
-      {
-        "name": "transactions_status_not_null",
-        "clause": "status IS NOT NULL"
-      },
-      {
-        "name": "transactions_transaction_type_not_null",
-        "clause": "transaction_type IS NOT NULL"
-      },
-      {
-        "name": "transactions_created_at_not_null",
-        "clause": "created_at IS NOT NULL"
-      },
-      {
-        "name": "transactions_transaction_id_not_null",
-        "clause": "transaction_id IS NOT NULL"
-      },
-      {
-        "name": "transactions_account_id_not_null",
-        "clause": "account_id IS NOT NULL"
-      },
-      {
-        "name": "transactions_amount_not_null",
-        "clause": "amount IS NOT NULL"
-      },
-      {
-        "name": "transactions_currency_not_null",
-        "clause": "currency IS NOT NULL"
-      },
-      {
-        "name": "transactions_status_not_null",
-        "clause": "status IS NOT NULL"
-      },
-      {
-        "name": "transactions_transaction_type_not_null",
-        "clause": "transaction_type IS NOT NULL"
-      },
-      {
-        "name": "transactions_created_at_not_null",
-        "clause": "created_at IS NOT NULL"
+        "name": "transactions_transaction_type_check",
+        "clause": "((transaction_type = ANY (ARRAY['card'::text, 'ach'::text, 'wire'::text, 'fee'::text, 'refund'::text])))"
       }
     ],
     "indexes": [

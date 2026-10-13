@@ -385,5 +385,257 @@
     "input_tokens": 1902,
     "output_tokens": 65,
     "total_tokens": 1967
+  },
+  {
+    "timestamp": "2026-10-13T15:45:13.106736",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 4.0648,
+    "time_to_first_token_seconds": 0.0029,
+    "input_tokens": 408,
+    "output_tokens": 159,
+    "total_tokens": 567
+  },
+  {
+    "timestamp": "2026-10-13T15:45:14.931387",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.8135,
+    "time_to_first_token_seconds": 0.0013,
+    "input_tokens": 139,
+    "output_tokens": 56,
+    "total_tokens": 195
+  },
+  {
+    "timestamp": "2026-10-13T15:49:05.761907",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.9917,
+    "time_to_first_token_seconds": 1.315,
+    "input_tokens": 530,
+    "output_tokens": 71,
+    "total_tokens": 601
+  },
+  {
+    "timestamp": "2026-10-13T15:49:06.998043",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.2258,
+    "time_to_first_token_seconds": 0.551,
+    "input_tokens": 131,
+    "output_tokens": 82,
+    "total_tokens": 213
+  },
+  {
+    "timestamp": "2026-10-13T15:49:10.164251",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.9061,
+    "time_to_first_token_seconds": 0.973,
+    "input_tokens": 853,
+    "output_tokens": 261,
+    "total_tokens": 1114
+  },
+  {
+    "timestamp": "2026-10-13T15:49:11.695568",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.517,
+    "time_to_first_token_seconds": 0.202,
+    "input_tokens": 134,
+    "output_tokens": 172,
+    "total_tokens": 306
+  },
+  {
+    "timestamp": "2026-10-13T15:49:12.598922",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 0.7134,
+    "time_to_first_token_seconds": 0.218,
+    "input_tokens": 873,
+    "output_tokens": 62,
+    "total_tokens": 935
+  },
+  {
+    "timestamp": "2026-10-13T15:49:16.406616",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 3.793,
+    "time_to_first_token_seconds": 2.599,
+    "input_tokens": 134,
+    "output_tokens": 130,
+    "total_tokens": 264
+  },
+  {
+    "timestamp": "2026-10-13T15:49:21.422711",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 4.7584,
+    "time_to_first_token_seconds": 1.128,
+    "input_tokens": 856,
+    "output_tokens": 404,
+    "total_tokens": 1260
+  },
+  {
+    "timestamp": "2026-10-13T15:49:25.084587",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 3.6488,
+    "time_to_first_token_seconds": 1.597,
+    "input_tokens": 139,
+    "output_tokens": 289,
+    "total_tokens": 428
+  },
+  {
+    "timestamp": "2026-10-13T15:49:28.800212",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 3.4625,
+    "time_to_first_token_seconds": 0.811,
+    "input_tokens": 1102,
+    "output_tokens": 323,
+    "total_tokens": 1425
+  },
+  {
+    "timestamp": "2026-10-13T15:49:30.742052",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.9271,
+    "time_to_first_token_seconds": 0.93,
+    "input_tokens": 134,
+    "output_tokens": 110,
+    "total_tokens": 244
+  },
+  {
+    "timestamp": "2026-10-13T15:49:33.631317",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.2595,
+    "time_to_first_token_seconds": 0.993,
+    "input_tokens": 1005,
+    "output_tokens": 141,
+    "total_tokens": 1146
+  },
+  {
+    "timestamp": "2026-10-13T15:49:37.049774",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 3.4038,
+    "time_to_first_token_seconds": 2.037,
+    "input_tokens": 133,
+    "output_tokens": 167,
+    "total_tokens": 300
+  },
+  {
+    "timestamp": "2026-10-13T15:49:38.467526",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.2528,
+    "time_to_first_token_seconds": 0.407,
+    "input_tokens": 1104,
+    "output_tokens": 104,
+    "total_tokens": 1208
+  },
+  {
+    "timestamp": "2026-10-13T15:49:40.777792",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.297,
+    "time_to_first_token_seconds": 1.636,
+    "input_tokens": 139,
+    "output_tokens": 56,
+    "total_tokens": 195
+  },
+  {
+    "timestamp": "2026-10-13T15:49:43.746713",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.7734,
+    "time_to_first_token_seconds": 1.592,
+    "input_tokens": 680,
+    "output_tokens": 129,
+    "total_tokens": 809
+  },
+  {
+    "timestamp": "2026-10-13T15:49:44.971982",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.212,
+    "time_to_first_token_seconds": 0.309,
+    "input_tokens": 137,
+    "output_tokens": 90,
+    "total_tokens": 227
+  },
+  {
+    "timestamp": "2026-10-13T15:49:46.716088",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.4609,
+    "time_to_first_token_seconds": 0.804,
+    "input_tokens": 463,
+    "output_tokens": 80,
+    "total_tokens": 543
+  },
+  {
+    "timestamp": "2026-10-13T15:49:48.360116",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.6257,
+    "time_to_first_token_seconds": 0.53,
+    "input_tokens": 139,
+    "output_tokens": 121,
+    "total_tokens": 260
+  },
+  {
+    "timestamp": "2026-10-13T15:49:49.551352",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.0122,
+    "time_to_first_token_seconds": 0.392,
+    "input_tokens": 474,
+    "output_tokens": 90,
+    "total_tokens": 564
+  },
+  {
+    "timestamp": "2026-10-13T15:49:51.120543",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.5612,
+    "time_to_first_token_seconds": 0.464,
+    "input_tokens": 149,
+    "output_tokens": 107,
+    "total_tokens": 256
+  },
+  {
+    "timestamp": "2026-10-13T15:49:53.586156",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.2803,
+    "time_to_first_token_seconds": 0.289,
+    "input_tokens": 1014,
+    "output_tokens": 263,
+    "total_tokens": 1277
+  },
+  {
+    "timestamp": "2026-10-13T15:49:55.278821",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.6779,
+    "time_to_first_token_seconds": 0.798,
+    "input_tokens": 143,
+    "output_tokens": 135,
+    "total_tokens": 278
+  },
+  {
+    "timestamp": "2026-10-13T15:49:56.751772",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.2858,
+    "time_to_first_token_seconds": 0.358,
+    "input_tokens": 530,
+    "output_tokens": 119,
+    "total_tokens": 649
+  },
+  {
+    "timestamp": "2026-10-13T15:49:59.211342",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 2.4464,
+    "time_to_first_token_seconds": 0.332,
+    "input_tokens": 131,
+    "output_tokens": 254,
+    "total_tokens": 385
+  },
+  {
+    "timestamp": "2026-10-13T15:50:00.980220",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.4959,
+    "time_to_first_token_seconds": 0.672,
+    "input_tokens": 447,
+    "output_tokens": 112,
+    "total_tokens": 559
+  },
+  {
+    "timestamp": "2026-10-13T15:50:02.176679",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 1.1783,
+    "time_to_first_token_seconds": 0.411,
+    "input_tokens": 130,
+    "output_tokens": 83,
+    "total_tokens": 213
   }
 ]

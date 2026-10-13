@@ -1,255 +1,197 @@
+"""Schema retrieval: embed the partial query and search the FAISS index.
+
+The FAISS index and chunk metadata are loaded lazily on first use so that
+importing this module (or ``src.config``) never requires the index to
+exist. Build the index first with::
+
+    python -m src.data_prep.build_schema_index
+"""
+
 import json
 import os
-import numpy as np
-import faiss
-import requests
 from pathlib import Path
-from typing import List, Dict, Any
-from openai import OpenAI
+from typing import Any, Dict, List, Optional
+
+import faiss
+import numpy as np
 from dotenv import load_dotenv
-from src.config import FAISS_INDEX, EMBEDDING_MODEL, INFERENCE_BASE_URL
+from openai import OpenAI
+
+from src.config import EMBEDDING_MODEL, INFERENCE_BASE_URL
 
 load_dotenv()
 
-# Load chunks metadata once at module level
 _FILE_PATH = Path(__file__).parents[2]
+_INDEX_PATH = _FILE_PATH / "data" / "schema_index.bin"
 _CHUNKS_METADATA_PATH = _FILE_PATH / "data" / "chunks_metadata.json"
 
-def _load_chunks_metadata() -> List[Dict[str, Any]]:
-    """Load chunks metadata from JSON file."""
-    with open(_CHUNKS_METADATA_PATH, 'r') as f:
-        return json.load(f)
+_faiss_index: Optional[faiss.Index] = None
+_chunks_metadata: Optional[List[Dict[str, Any]]] = None
 
-_CHUNKS_METADATA = _load_chunks_metadata()
 
-### Embedding and Reranking Utilities ###
-def get_embedding(text: str, api_key: str = None) -> List[float]:
-    """
-    Get embedding for a given text using Fireworks AI embedding model.
+def _get_index() -> faiss.Index:
+    """Load the FAISS index on first use."""
+    global _faiss_index
+    if _faiss_index is None:
+        if not _INDEX_PATH.exists():
+            raise FileNotFoundError(
+                f"FAISS index not found at {_INDEX_PATH}. "
+                "Build it first with: python -m src.data_prep.build_schema_index"
+            )
+        _faiss_index = faiss.read_index(str(_INDEX_PATH))
+        print(f"Loaded FAISS index with {_faiss_index.ntotal} vectors")
+    return _faiss_index
 
-    Args:
-        text: Input text to embed
-        api_key: Optional API key. If not provided, uses FIREWORKS_API_KEY env var.
 
-    Returns:
-        List of float values representing the embedding vector
-        
+def _get_chunks_metadata() -> List[Dict[str, Any]]:
+    """Load chunk metadata on first use."""
+    global _chunks_metadata
+    if _chunks_metadata is None:
+        if not _CHUNKS_METADATA_PATH.exists():
+            raise FileNotFoundError(
+                f"Chunk metadata not found at {_CHUNKS_METADATA_PATH}. "
+                "Build it first with: python -m src.data_prep.build_schema_index"
+            )
+        with open(_CHUNKS_METADATA_PATH, "r") as f:
+            _chunks_metadata = json.load(f)
+    return _chunks_metadata
+
+
+def get_embedding(text: str, api_key: Optional[str] = None) -> List[float]:
+    """Embed text with the Fireworks embedding model.
+
     Raises:
-        ValueError: If API key is not found or response is invalid
-        Exception: If embedding API call fails
+        ValueError: If no API key is available or the response is invalid.
     """
     if api_key is None:
         api_key = os.getenv("FIREWORKS_API_KEY")
-    
-    if api_key is None:
-        raise ValueError("FIREWORKS_API_KEY not found. Please provide it as an argument or set it as an environment variable.")
-    
-    # Create client and make API call
-    client = OpenAI(
-        api_key=api_key,
-        base_url=INFERENCE_BASE_URL,
-    )
-    
+    if not api_key:
+        raise ValueError(
+            "FIREWORKS_API_KEY not found. Provide it as an argument or set it "
+            "as an environment variable (see .env.example)."
+        )
+
+    client = OpenAI(api_key=api_key, base_url=INFERENCE_BASE_URL)
+
     try:
         response = client.embeddings.create(model=EMBEDDING_MODEL, input=text)
     except Exception as api_error:
-        # Handle 404 errors (model not found)
-        # Check for status_code attribute (OpenAI APIError)
-        status_code = getattr(api_error, 'status_code', None)
-        # Also check for NotFoundError exception type
-        error_type = type(api_error).__name__
-        
-        if status_code == 404 or error_type == 'NotFoundError':
+        status_code = getattr(api_error, "status_code", None)
+        if status_code == 404 or type(api_error).__name__ == "NotFoundError":
             raise ValueError(
                 f"Embedding model not found: {EMBEDDING_MODEL}. "
-                f"Please check that the model name is correct and available."
+                "Please check that the model name is correct and available."
             ) from api_error
-        # Re-raise other API errors with original exception
         raise
-    
-    # Validate response
+
     if not response or not response.data:
         raise ValueError("Invalid response from embedding API: no data returned")
-    
-    if len(response.data) == 0:
-        raise ValueError("Invalid response from embedding API: empty data array")
-    
+
     embedding = response.data[0].embedding
-    
-    if not embedding or len(embedding) == 0:
+    if not embedding:
         raise ValueError("Invalid embedding returned: empty embedding vector")
-    
+
     return embedding
 
 
-# def rerank_results(query: str, results: List[Dict], top_n: int = 5, api_key: str = None) -> List[Dict]:
-#     """
-#     Rerank search results using Fireworks AI reranker model.
+def _format_result(chunk: Dict[str, Any], score: float) -> Dict[str, Any]:
+    """Build a human-readable search result from a chunk and its score."""
+    metadata = chunk.get("metadata", {})
+    result = {
+        "table_name": chunk["table_name"],
+        "chunk_type": chunk["type"],
+        "content": chunk["content"],
+        "score": float(score),
+    }
 
-#     Takes search results and reranks them based on relevance to the query
-#     using a specialized reranking model that considers cross-attention between
-#     query and documents.
+    chunk_type = chunk["type"]
+    if chunk_type == "table_overview":
+        result["attributes"] = {
+            "row_count": metadata.get("row_count"),
+            "primary_keys": metadata.get("primary_keys", []),
+            "unique_columns": metadata.get("unique_columns", []),
+        }
+    elif chunk_type == "columns":
+        result["attributes"] = {
+            "columns": [
+                {
+                    "name": col["name"],
+                    "data_type": col["data_type"],
+                    "nullable": col["nullable"],
+                }
+                for col in metadata.get("columns", [])
+            ]
+        }
+    elif chunk_type == "foreign_keys":
+        result["attributes"] = {
+            "foreign_keys": [
+                {
+                    "column": fk["column"],
+                    "references_table": fk["references_table"],
+                    "references_column": fk["references_column"],
+                }
+                for fk in metadata.get("foreign_keys", [])
+            ]
+        }
+    elif chunk_type == "constraints_indexes":
+        result["attributes"] = {
+            "check_constraints": metadata.get("check_constraints", []),
+            "indexes": [
+                {"name": idx["name"], "definition": idx["definition"]}
+                for idx in metadata.get("indexes", [])
+            ],
+        }
+    elif chunk_type == "relationship":
+        result["attributes"] = {
+            "from_table": metadata.get("from_table"),
+            "from_column": metadata.get("from_column"),
+            "to_table": metadata.get("to_table"),
+            "to_column": metadata.get("to_column"),
+        }
 
-#     Args:
-#         query: Original search query
-#         results: List of dictionaries containing schema information
-#         top_n: Number of top results to return after reranking (default: 5)
-#         api_key: Optional API key. If not provided, uses FIREWORKS_API_KEY env var.
-
-#     Returns:
-#         List of dictionaries containing reranked schema information with updated scores
-#     """
-#     if api_key is None:
-#         api_key = os.getenv("FIREWORKS_API_KEY")
-    
-#     if api_key is None:
-#         raise ValueError("FIREWORKS_API_KEY not found. Please provide it as an argument or set it as an environment variable.")
-    
-#     # Prepare documents as text for reranker (table_name + content)
-#     documents = [f"{r.get('table_name', '')}: {r.get('content', '')}" for r in results]
-
-#     payload = {
-#         "model": RERANKER_MODEL,
-#         "query": query,
-#         "documents": documents,
-#         "top_n": top_n,
-#         "return_documents": False,
-#     }
-
-#     headers = {
-#         "Authorization": f"Bearer {api_key}",
-#         "Content-Type": "application/json",
-#     }
-
-#     # Use session for connection pooling
-#     response = _RERANK_SESSION.post(RERANK_BASE_URL, json=payload, headers=headers)
-#     rerank_data = response.json()
-
-#     # Map reranked results back to original schema data
-#     reranked_results = []
-#     for item in rerank_data.get("data", []):
-#         idx = item["index"]
-#         reranked_results.append({**results[idx], "score": item["relevance_score"]})
-
-#     return reranked_results
+    return result
 
 
-### Vector Search Functions ###
-def search_vector(query: str, top_k: int = 3, api_key: str = None) -> List[Dict[str, Any]]:
-    """
-    Search schema using vector embeddings and FAISS for semantic search.
+def search_vector(
+    query: str, top_k: int = 3, api_key: Optional[str] = None
+) -> List[Dict[str, Any]]:
+    """Semantic schema search over the FAISS index.
 
-    This is Stage 2: semantic search using vector embeddings to understand
-    query meaning and intent beyond exact keyword matching.
+    Both stored embeddings and query vectors are L2-normalized, so the
+    inner-product index returns cosine similarity scores.
 
     Args:
-        query: Search query string
-        top_k: Number of top results to return (default: 3)
-        api_key: Optional API key. If not provided, uses FIREWORKS_API_KEY env var.
+        query: Search query string (typically the partial SQL).
+        top_k: Number of results; clamped to the index size.
+        api_key: Optional Fireworks API key (defaults to env var).
 
     Returns:
-        List of dictionaries containing human-readable schema information and scores
+        List of result dicts with table name, chunk type, content, score,
+        and structured attributes. Empty when the index is empty or the
+        query is blank.
     """
+    if not query or not query.strip():
+        return []
+
+    index = _get_index()
+    chunks_metadata = _get_chunks_metadata()
+
+    if index.ntotal == 0:
+        return []
+
+    top_k = max(1, min(int(top_k), index.ntotal))
+
     query_embedding = get_embedding(query, api_key=api_key)
     query_vector = np.array([query_embedding], dtype=np.float32)
-
     faiss.normalize_L2(query_vector)
-    faiss_index = FAISS_INDEX
 
-    # Return cosine similarities instead of L2 distances
-    distances, indices = faiss_index.search(query_vector, top_k)
+    scores, indices = index.search(query_vector, top_k)
 
-    # Pre-allocate results list for better performance
     results = []
-    
-    for idx, score in zip(indices[0], distances[0]):
-        chunk = _CHUNKS_METADATA[idx]
-        metadata = chunk.get("metadata", {})
-        
-        # Build human-readable result based on chunk type
-        result = {
-            "table_name": chunk["table_name"],
-            "chunk_type": chunk["type"],
-            "content": chunk["content"],
-            "score": float(score),
-        }
-        
-        # Add structured metadata based on chunk type (optimized)
-        chunk_type = chunk["type"]
-        if chunk_type == "table_overview":
-            result["attributes"] = {
-                "row_count": metadata.get("row_count"),
-                "primary_keys": metadata.get("primary_keys", []),
-                "unique_columns": metadata.get("unique_columns", []),
-            }
-        elif chunk_type == "columns":
-            result["attributes"] = {
-                "columns": [
-                    {
-                        "name": col["name"],
-                        "data_type": col["data_type"],
-                        "nullable": col["nullable"]
-                    }
-                    for col in metadata.get("columns", [])
-                ]
-            }
-        elif chunk_type == "foreign_keys":
-            result["attributes"] = {
-                "foreign_keys": [
-                    {
-                        "column": fk["column"],
-                        "references_table": fk["references_table"],
-                        "references_column": fk["references_column"]
-                    }
-                    for fk in metadata.get("foreign_keys", [])
-                ]
-            }
-        elif chunk_type == "constraints_indexes":
-            result["attributes"] = {
-                "check_constraints": metadata.get("check_constraints", []),
-                "indexes": [
-                    {
-                        "name": idx["name"],
-                        "definition": idx["definition"]
-                    }
-                    for idx in metadata.get("indexes", [])
-                ]
-            }
-        elif chunk_type == "relationship":
-            result["attributes"] = {
-                "from_table": metadata.get("from_table"),
-                "from_column": metadata.get("from_column"),
-                "to_table": metadata.get("to_table"),
-                "to_column": metadata.get("to_column"),
-            }
-        
-        results.append(result)
+    for idx, score in zip(indices[0], scores[0]):
+        # FAISS returns -1 for missing results (e.g. top_k > ntotal)
+        if idx < 0 or idx >= len(chunks_metadata):
+            continue
+        results.append(_format_result(chunks_metadata[idx], score))
+
     return results
-
-
-# def search_vector_with_reranking(query: str, top_k: int = 5, api_key: str = None) -> List[Dict[str, Any]]:
-#     """
-#     Search schema using vector embeddings and FAISS for semantic search with reranking.
-
-#     This is Stage 3: semantic search using vector embeddings to understand
-#     query meaning and intent beyond exact keyword matching, with reranking using LLM.
-
-#     Args:
-#         query: Search query string
-#         top_k: Number of top results to return (default: 5)
-#         api_key: Optional API key. If not provided, uses FIREWORKS_API_KEY env var.
-
-#     Returns:
-#         List of dictionaries containing schema information with preserved cosine scores
-#     """
-#     results = search_vector(query, top_k, api_key=api_key)
-#     # Create a unique key for each result (table_name + chunk_type)
-#     cosine_scores = {f"{r['table_name']}_{r['chunk_type']}": r["score"] for r in results}
-#     reranked_results = rerank_results(query=query, results=results, api_key=api_key)
-
-#     for r in reranked_results:
-#         key = f"{r['table_name']}_{r['chunk_type']}"
-#         if key in cosine_scores:
-#             r["score"] = cosine_scores[key]
-
-#     return reranked_results

@@ -1,0 +1,266 @@
+{
+  "timestamp": "2026-10-13T15:50:02.179186",
+  "model": "accounts/fireworks/models/glm-5p3-flash",
+  "top_k": 5,
+  "summary": {
+    "with_retrieval": {
+      "avg_latency_seconds": 2.3976,
+      "prefix_preserved": "13/13",
+      "sql_valid": "13/13"
+    },
+    "without_retrieval": {
+      "avg_latency_seconds": 2.1284,
+      "prefix_preserved": "13/13",
+      "sql_valid": "12/13"
+    }
+  },
+  "results": [
+    {
+      "name": "simple_select_customers",
+      "category": "simple_select",
+      "partial_sql": "SELECT * FROM cus",
+      "with_retrieval": {
+        "completion": "tomers",
+        "latency_seconds": 2.4492,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "tomers",
+        "latency_seconds": 1.233,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "select_columns",
+      "category": "simple_select",
+      "partial_sql": "SELECT full_name, email FROM customers",
+      "with_retrieval": {
+        "completion": " ORDER BY full_name;",
+        "latency_seconds": 3.1672,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": " ORDER BY full_name;",
+        "latency_seconds": 1.5297,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "filter_active_accounts",
+      "category": "filtering",
+      "partial_sql": "SELECT * FROM accounts WHERE status = ",
+      "with_retrieval": {
+        "completion": "'active'",
+        "latency_seconds": 0.9028,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "'active'",
+        "latency_seconds": 3.8069,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "filter_vip_customers",
+      "category": "filtering",
+      "partial_sql": "SELECT customer_id, full_name FROM customers WHERE is_vip",
+      "with_retrieval": {
+        "completion": ";",
+        "latency_seconds": 5.0147,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": " = TRUE;",
+        "latency_seconds": 3.6615,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "aggregate_total_balance",
+      "category": "aggregation",
+      "partial_sql": "SELECT SUM(current_balance) FROM accounts",
+      "with_retrieval": {
+        "completion": ";",
+        "latency_seconds": 3.7151,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": ";",
+        "latency_seconds": 1.9391,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "count_transactions",
+      "category": "aggregation",
+      "partial_sql": "SELECT COUNT(*) FROM transactions WHERE ",
+      "with_retrieval": {
+        "completion": "status = 'completed';",
+        "latency_seconds": 2.8894,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "status = 'completed'",
+        "latency_seconds": 3.4174,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "group_by_account_type",
+      "category": "group_by",
+      "partial_sql": "SELECT account_type, AVG(current_balance) FROM accounts GROUP BY ",
+      "with_retrieval": {
+        "completion": "account_type",
+        "latency_seconds": 1.4163,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "account_type",
+        "latency_seconds": 2.3101,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "order_by_balance",
+      "category": "order_by",
+      "partial_sql": "SELECT account_number, current_balance FROM accounts ORDER BY ",
+      "with_retrieval": {
+        "completion": "current_balance DESC;",
+        "latency_seconds": 2.9673,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "current_balance DESC",
+        "latency_seconds": 1.2228,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "join_customers_accounts",
+      "category": "join",
+      "partial_sql": "SELECT c.full_name, a.account_number FROM customers c JOIN ",
+      "with_retrieval": {
+        "completion": "accounts a ON c.customer_id = a.customer_id",
+        "latency_seconds": 1.7486,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "accounts a ON c.customer_id = a.customer_id",
+        "latency_seconds": 1.6394,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "join_three_tables",
+      "category": "join",
+      "partial_sql": "SELECT c.full_name, t.amount FROM customers c JOIN accounts a ON a.customer_id = c.customer_id JOIN ",
+      "with_retrieval": {
+        "completion": "transactions t ON t.account_id = a.account_id",
+        "latency_seconds": 1.19,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "transactions t ON t.account_id = a.account_id",
+        "latency_seconds": 1.5684,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "incomplete_where_clause",
+      "category": "incomplete_clause",
+      "partial_sql": "SELECT * FROM transactions t WHERE t.status = 'completed' AND t.amount < ",
+      "with_retrieval": {
+        "completion": "0",
+        "latency_seconds": 2.4644,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "100",
+        "latency_seconds": 1.6913,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "incomplete_select_list",
+      "category": "incomplete_clause",
+      "partial_sql": "SELECT customer_id, ",
+      "with_retrieval": {
+        "completion": "email FROM customers;",
+        "latency_seconds": 1.4724,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "COUNT(*) AS total_orders FROM orders GROUP BY customer_id;",
+        "latency_seconds": 2.4587,
+        "prefix_preserved": true,
+        "sql_valid": false,
+        "retrieved_chunks": 0
+      }
+    },
+    {
+      "name": "ambiguous_amount_query",
+      "category": "ambiguous",
+      "partial_sql": "SELECT amount FROM ",
+      "with_retrieval": {
+        "completion": "transactions;",
+        "latency_seconds": 1.7711,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 5
+      },
+      "without_retrieval": {
+        "completion": "transactions",
+        "latency_seconds": 1.1914,
+        "prefix_preserved": true,
+        "sql_valid": true,
+        "retrieved_chunks": 0
+      }
+    }
+  ]
+}

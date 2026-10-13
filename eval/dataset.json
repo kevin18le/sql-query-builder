@@ -1,0 +1,15 @@
+[
+  {"name": "simple_select_customers", "category": "simple_select", "partial_sql": "SELECT * FROM cus"},
+  {"name": "select_columns", "category": "simple_select", "partial_sql": "SELECT full_name, email FROM customers"},
+  {"name": "filter_active_accounts", "category": "filtering", "partial_sql": "SELECT * FROM accounts WHERE status = "},
+  {"name": "filter_vip_customers", "category": "filtering", "partial_sql": "SELECT customer_id, full_name FROM customers WHERE is_vip"},
+  {"name": "aggregate_total_balance", "category": "aggregation", "partial_sql": "SELECT SUM(current_balance) FROM accounts"},
+  {"name": "count_transactions", "category": "aggregation", "partial_sql": "SELECT COUNT(*) FROM transactions WHERE "},
+  {"name": "group_by_account_type", "category": "group_by", "partial_sql": "SELECT account_type, AVG(current_balance) FROM accounts GROUP BY "},
+  {"name": "order_by_balance", "category": "order_by", "partial_sql": "SELECT account_number, current_balance FROM accounts ORDER BY "},
+  {"name": "join_customers_accounts", "category": "join", "partial_sql": "SELECT c.full_name, a.account_number FROM customers c JOIN "},
+  {"name": "join_three_tables", "category": "join", "partial_sql": "SELECT c.full_name, t.amount FROM customers c JOIN accounts a ON a.customer_id = c.customer_id JOIN "},
+  {"name": "incomplete_where_clause", "category": "incomplete_clause", "partial_sql": "SELECT * FROM transactions t WHERE t.status = 'completed' AND t.amount < "},
+  {"name": "incomplete_select_list", "category": "incomplete_clause", "partial_sql": "SELECT customer_id, "},
+  {"name": "ambiguous_amount_query", "category": "ambiguous", "partial_sql": "SELECT amount FROM "}
+]
