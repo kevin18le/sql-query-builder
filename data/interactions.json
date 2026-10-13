@@ -10,5 +10,113 @@
     "input_sql": "-- get the customer id, name, phone number for user 1\nselect ",
     "suggested_completion": "select customer_id, name, phone_number from accounts where user_id = 1;",
     "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-07T15:25:03.170781",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": "select customer_id, name from customers limit 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-07T18:56:18.352209",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id, ",
+    "suggested_completion": "select customer_id, name from customers order by customer_id limit 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-07T19:05:04.070049",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": "select customer_id, name from customers order by name limit 3",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-07T19:59:27.977275",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": "select customer_id, full_name from customers order by customer_id limit 3;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-07T20:08:09.429638",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": ", full_name from customers limit 3;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-07T21:02:02.766437",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": ", full_name\nfrom customers\norder by customer_id\nlimit 3;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T10:29:29.644178",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": ", name FROM customers ORDER BY customer_id LIMIT 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T10:30:00.777398",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": "select customer_id, name from customers order by name limit 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T10:32:10.244447",
+    "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions\nFROM customers c\nJOIN accounts a       ON a.customer_id = c.customer_id\nJOIN transactions t   ON t.account_id = a.account_id",
+    "suggested_completion": "JOIN merchants m ON m.merchant_id = t.merchant_id\nWHERE t.transaction_type = 'card'\nGROUP BY c.customer_id, c.full_name, month, m.category\nORDER BY c.customer_id, month, total_spend DESC;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T10:37:42.211401",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": ", full_name\nfrom customers\norder by customer_id\nlimit 3;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T10:45:26.121812",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": ", full_name from customers order by customer_id limit 3;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T10:48:38.830385",
+    "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions\nFROM customers c\nJOIN accounts a       ON a.customer_id = c.customer_id\nJOIN transactions t   ON t.account_id = a.account_id",
+    "suggested_completion": "JOIN merchants m ON m.merchant_id = t.merchant_id\nWHERE t.transaction_type = 'card'\nGROUP BY c.customer_id, c.full_name, month, m.category\nORDER BY c.customer_id, month, total_spend DESC;",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T11:45:56.469452",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": "select customer_id, name from customers order by name limit 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T11:47:08.653078",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id",
+    "suggested_completion": " , name from customers order by customer_id limit 3",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T11:51:21.596940",
+    "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions",
+    "suggested_completion": "FROM transactions t\nJOIN merchants m ON t.merchant_id = m.merchant_id\nJOIN cards cd ON t.card_id = cd.card_id\nJOIN accounts a ON cd.account_id = a.account_id\nJOIN customers c ON a.customer_id = c.customer_id\nWHERE t.transaction_type = 'credit'\nGROUP BY c.customer_id, c.full_name, date_trunc('month', t.created_at)::date, m.category\nORDER BY c.customer_id, month",
+    "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2025-12-08T12:21:34.893412",
+    "input_sql": "-- return top 3 customers (customer_id, name)\nselect customer_id,",
+    "suggested_completion": "select customer_id, name from customers order by name limit 3;",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T12:23:19.414324",
+    "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions\nFROM customers c\nJOIN accounts a       ON a.customer_id = c.customer_id",
+    "suggested_completion": "full_name FROM customers ORDER BY customer_id LIMIT 3",
+    "applied_autocomplete": 0
+  },
+  {
+    "timestamp": "2025-12-08T12:24:54.194353",
+    "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions\nFROM customers c\nJOIN accounts a       ON a.customer_id = c.customer_id",
+    "suggested_completion": "JOIN transactions t ON t.account_id = a.account_id\nJOIN merchants m ON m.merchant_id = t.merchant_id\nWHERE t.transaction_type = 'card'\nGROUP BY c.customer_id, c.full_name, month, m.category\nORDER BY c.customer_id, month;",
+    "applied_autocomplete": 1
   }
 ]

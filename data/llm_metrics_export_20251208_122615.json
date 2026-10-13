@@ -1,0 +1,400 @@
+{
+  "export_timestamp": "2025-12-08T12:26:15.848070",
+  "summary": {
+    "total_requests": 43,
+    "average_time_to_complete_seconds": 6.7073,
+    "average_time_to_first_token_seconds": 0.164,
+    "total_input_tokens": 21286,
+    "total_output_tokens": 29524,
+    "total_tokens": 50810
+  },
+  "metrics": [
+    {
+      "timestamp": "2025-12-07T12:30:48.093749",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 9.7877,
+      "time_to_first_token_seconds": 0.161,
+      "input_tokens": 205,
+      "output_tokens": 2048,
+      "total_tokens": 2253
+    },
+    {
+      "timestamp": "2025-12-07T12:35:58.166385",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 9.9642,
+      "time_to_first_token_seconds": 0.125,
+      "input_tokens": 206,
+      "output_tokens": 2048,
+      "total_tokens": 2254
+    },
+    {
+      "timestamp": "2025-12-07T12:39:34.545985",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 31.2713,
+      "time_to_first_token_seconds": 0.0106,
+      "input_tokens": 206,
+      "output_tokens": 2048,
+      "total_tokens": 2254
+    },
+    {
+      "timestamp": "2025-12-07T12:41:15.607331",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 6.443,
+      "time_to_first_token_seconds": 0.195,
+      "input_tokens": 84,
+      "output_tokens": 551,
+      "total_tokens": 635
+    },
+    {
+      "timestamp": "2025-12-07T12:51:37.061126",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 6.4199,
+      "time_to_first_token_seconds": 0.102,
+      "input_tokens": 236,
+      "output_tokens": 1194,
+      "total_tokens": 1430
+    },
+    {
+      "timestamp": "2025-12-07T15:24:45.004046",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 9.298,
+      "time_to_first_token_seconds": 0.111,
+      "input_tokens": 235,
+      "output_tokens": 1707,
+      "total_tokens": 1942
+    },
+    {
+      "timestamp": "2025-12-07T18:45:59.844247",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 25.5961,
+      "time_to_first_token_seconds": 0.136,
+      "input_tokens": 235,
+      "output_tokens": 2048,
+      "total_tokens": 2283
+    },
+    {
+      "timestamp": "2025-12-07T18:53:15.241541",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 19.2699,
+      "time_to_first_token_seconds": 0.312,
+      "input_tokens": 235,
+      "output_tokens": 2048,
+      "total_tokens": 2283
+    },
+    {
+      "timestamp": "2025-12-07T18:54:49.442735",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 14.7731,
+      "time_to_first_token_seconds": 0.184,
+      "input_tokens": 236,
+      "output_tokens": 1579,
+      "total_tokens": 1815
+    },
+    {
+      "timestamp": "2025-12-07T19:04:31.916644",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 8.0173,
+      "time_to_first_token_seconds": 0.185,
+      "input_tokens": 235,
+      "output_tokens": 1089,
+      "total_tokens": 1324
+    },
+    {
+      "timestamp": "2025-12-07T19:07:41.362918",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 21.3353,
+      "time_to_first_token_seconds": 0.215,
+      "input_tokens": 234,
+      "output_tokens": 2048,
+      "total_tokens": 2282
+    },
+    {
+      "timestamp": "2025-12-07T19:34:16.202537",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 8.8927,
+      "time_to_first_token_seconds": 0.315,
+      "input_tokens": 350,
+      "output_tokens": 842,
+      "total_tokens": 1192
+    },
+    {
+      "timestamp": "2025-12-07T19:48:55.932851",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 15.8981,
+      "time_to_first_token_seconds": 0.188,
+      "input_tokens": 464,
+      "output_tokens": 1747,
+      "total_tokens": 2211
+    },
+    {
+      "timestamp": "2025-12-07T19:59:01.681770",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 6.5308,
+      "time_to_first_token_seconds": 0.155,
+      "input_tokens": 1205,
+      "output_tokens": 781,
+      "total_tokens": 1986
+    },
+    {
+      "timestamp": "2025-12-07T20:08:01.726874",
+      "model": "accounts/fireworks/models/qwen3-235b-a22b",
+      "time_to_complete_seconds": 5.4105,
+      "time_to_first_token_seconds": 0.274,
+      "input_tokens": 1273,
+      "output_tokens": 466,
+      "total_tokens": 1739
+    },
+    {
+      "timestamp": "2025-12-07T21:01:41.581322",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.7421,
+      "time_to_first_token_seconds": 0.319,
+      "input_tokens": 1200,
+      "output_tokens": 21,
+      "total_tokens": 1221
+    },
+    {
+      "timestamp": "2025-12-08T10:28:53.417446",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 2.6892,
+      "time_to_first_token_seconds": 0.116,
+      "input_tokens": 113,
+      "output_tokens": 370,
+      "total_tokens": 483
+    },
+    {
+      "timestamp": "2025-12-08T10:29:23.570822",
+      "model": "accounts/fireworks/models/qwen3-235b-a22b",
+      "time_to_complete_seconds": 22.6792,
+      "time_to_first_token_seconds": 0.341,
+      "input_tokens": 113,
+      "output_tokens": 1697,
+      "total_tokens": 1810
+    },
+    {
+      "timestamp": "2025-12-08T10:29:37.827016",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 1.0551,
+      "time_to_first_token_seconds": 0.223,
+      "input_tokens": 111,
+      "output_tokens": 22,
+      "total_tokens": 133
+    },
+    {
+      "timestamp": "2025-12-08T10:29:49.810229",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 2.8052,
+      "time_to_first_token_seconds": 0.028,
+      "input_tokens": 113,
+      "output_tokens": 370,
+      "total_tokens": 483
+    },
+    {
+      "timestamp": "2025-12-08T10:30:08.864584",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.6997,
+      "time_to_first_token_seconds": 0.2,
+      "input_tokens": 1144,
+      "output_tokens": 22,
+      "total_tokens": 1166
+    },
+    {
+      "timestamp": "2025-12-08T10:31:39.564782",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.8491,
+      "time_to_first_token_seconds": 0.304,
+      "input_tokens": 1864,
+      "output_tokens": 61,
+      "total_tokens": 1925
+    },
+    {
+      "timestamp": "2025-12-08T10:35:16.579460",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 2.6316,
+      "time_to_first_token_seconds": 0.028,
+      "input_tokens": 113,
+      "output_tokens": 370,
+      "total_tokens": 483
+    },
+    {
+      "timestamp": "2025-12-08T10:35:30.143177",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.7897,
+      "time_to_first_token_seconds": 0.168,
+      "input_tokens": 133,
+      "output_tokens": 19,
+      "total_tokens": 152
+    },
+    {
+      "timestamp": "2025-12-08T10:35:35.875630",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.6266,
+      "time_to_first_token_seconds": 0.195,
+      "input_tokens": 111,
+      "output_tokens": 22,
+      "total_tokens": 133
+    },
+    {
+      "timestamp": "2025-12-08T10:36:57.137769",
+      "model": "accounts/fireworks/models/qwen3-235b-a22b",
+      "time_to_complete_seconds": 25.6308,
+      "time_to_first_token_seconds": 0.316,
+      "input_tokens": 113,
+      "output_tokens": 2048,
+      "total_tokens": 2161
+    },
+    {
+      "timestamp": "2025-12-08T10:37:17.441143",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.4347,
+      "time_to_first_token_seconds": 0.027,
+      "input_tokens": 111,
+      "output_tokens": 22,
+      "total_tokens": 133
+    },
+    {
+      "timestamp": "2025-12-08T10:37:28.457365",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.7201,
+      "time_to_first_token_seconds": 0.282,
+      "input_tokens": 1144,
+      "output_tokens": 22,
+      "total_tokens": 1166
+    },
+    {
+      "timestamp": "2025-12-08T10:44:18.205842",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 2.5046,
+      "time_to_first_token_seconds": 0.027,
+      "input_tokens": 113,
+      "output_tokens": 370,
+      "total_tokens": 483
+    },
+    {
+      "timestamp": "2025-12-08T10:44:25.620828",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.3317,
+      "time_to_first_token_seconds": 0.026,
+      "input_tokens": 111,
+      "output_tokens": 22,
+      "total_tokens": 133
+    },
+    {
+      "timestamp": "2025-12-08T10:44:29.779215",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.4832,
+      "time_to_first_token_seconds": 0.162,
+      "input_tokens": 133,
+      "output_tokens": 19,
+      "total_tokens": 152
+    },
+    {
+      "timestamp": "2025-12-08T10:45:12.050151",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.4453,
+      "time_to_first_token_seconds": 0.026,
+      "input_tokens": 1144,
+      "output_tokens": 19,
+      "total_tokens": 1163
+    },
+    {
+      "timestamp": "2025-12-08T10:48:26.917430",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.6228,
+      "time_to_first_token_seconds": 0.029,
+      "input_tokens": 1864,
+      "output_tokens": 61,
+      "total_tokens": 1925
+    },
+    {
+      "timestamp": "2025-12-08T11:45:43.832411",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 2.9162,
+      "time_to_first_token_seconds": 0.029,
+      "input_tokens": 113,
+      "output_tokens": 370,
+      "total_tokens": 483
+    },
+    {
+      "timestamp": "2025-12-08T11:45:58.660441",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.7504,
+      "time_to_first_token_seconds": 0.203,
+      "input_tokens": 111,
+      "output_tokens": 22,
+      "total_tokens": 133
+    },
+    {
+      "timestamp": "2025-12-08T11:46:03.737130",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.947,
+      "time_to_first_token_seconds": 0.47,
+      "input_tokens": 133,
+      "output_tokens": 19,
+      "total_tokens": 152
+    },
+    {
+      "timestamp": "2025-12-08T11:47:17.423525",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.5944,
+      "time_to_first_token_seconds": 0.233,
+      "input_tokens": 1172,
+      "output_tokens": 17,
+      "total_tokens": 1189
+    },
+    {
+      "timestamp": "2025-12-08T11:49:32.912104",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.9727,
+      "time_to_first_token_seconds": 0.162,
+      "input_tokens": 938,
+      "output_tokens": 103,
+      "total_tokens": 1041
+    },
+    {
+      "timestamp": "2025-12-08T12:21:26.147521",
+      "model": "accounts/fireworks/models/qwen3-8b",
+      "time_to_complete_seconds": 7.0647,
+      "time_to_first_token_seconds": 0.09,
+      "input_tokens": 113,
+      "output_tokens": 1069,
+      "total_tokens": 1182
+    },
+    {
+      "timestamp": "2025-12-08T12:21:37.042825",
+      "model": "accounts/fireworks/models/kimi-k2-instruct-0905",
+      "time_to_complete_seconds": 0.7107,
+      "time_to_first_token_seconds": 0.186,
+      "input_tokens": 111,
+      "output_tokens": 23,
+      "total_tokens": 134
+    },
+    {
+      "timestamp": "2025-12-08T12:21:46.111823",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 1.7912,
+      "time_to_first_token_seconds": 0.0012,
+      "input_tokens": 133,
+      "output_tokens": 18,
+      "total_tokens": 151
+    },
+    {
+      "timestamp": "2025-12-08T12:22:26.822494",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 0.7514,
+      "time_to_first_token_seconds": 0.187,
+      "input_tokens": 1173,
+      "output_tokens": 17,
+      "total_tokens": 1190
+    },
+    {
+      "timestamp": "2025-12-08T12:23:31.243282",
+      "model": "accounts/fireworks/models/llama-v3p3-70b-instruct",
+      "time_to_complete_seconds": 6.268,
+      "time_to_first_token_seconds": 0.0053,
+      "input_tokens": 1902,
+      "output_tokens": 65,
+      "total_tokens": 1967
+    }
+  ]
+}
