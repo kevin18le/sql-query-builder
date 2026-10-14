@@ -1,5 +1,10 @@
 .PHONY: setup install index clean run test
 
+# Load .env so PGUSER/PGPASSWORD/etc. reach recipe commands like psql.
+# Python targets also call load_dotenv(), but Make does not do that itself.
+-include .env
+export
+
 # Use the venv interpreter directly so each recipe line (its own shell)
 # does not depend on `source .venv/bin/activate` persisting across lines.
 PYTHON := .venv/bin/python
