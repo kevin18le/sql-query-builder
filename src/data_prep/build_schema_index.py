@@ -352,13 +352,19 @@ def get_embeddings(texts: List[str], api_key: str) -> np.ndarray:
 
 
 def build_faiss_index(embeddings: np.ndarray, output_dir: Path):
-    """Build and save a FAISS index."""
+    """Build and save a FAISS inner-product index.
+
+    Embeddings must be L2-normalized before being added (done in ``main``)
+    so that inner-product search returns cosine similarity. Query vectors
+    are normalized at search time in ``src.search.vector_search``.
+    """
     # Get embedding dimension
     dimension = embeddings.shape[1]
-    
-    # Create FAISS index (using Inner Product - L2 distance is also common)
+
+    # Create FAISS index (inner product == cosine similarity for
+    # L2-normalized vectors)
     index = faiss.IndexFlatIP(dimension)
-    
+
     # Add embeddings to index
     index.add(embeddings)
     
@@ -429,6 +435,10 @@ def main():
     texts = [chunk['content'] for chunk in chunks]
     embeddings = get_embeddings(texts, args.api_key)
     print(f"Generated {len(embeddings)} embeddings")
+
+    # L2-normalize so inner-product search yields cosine similarity.
+    # Query vectors are normalized the same way at search time.
+    faiss.normalize_L2(embeddings)
     
     print("\nSaving embeddings...")
     save_embeddings(embeddings, output_dir)
