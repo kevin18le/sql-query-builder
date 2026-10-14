@@ -101,7 +101,19 @@ def export_interaction_logs():
         return gr.update(value=None, visible=False), f"Error exporting interactions: {e}"
 
 
-with gr.Blocks(theme=GRADIO_THEME, css=CUSTOM_CSS, title="SQL Autocomplete") as demo:
+# The UI is designed for a light palette; force it so system dark mode
+# doesn't mix dark Gradio components with the light custom CSS.
+FORCE_LIGHT_THEME_JS = """
+() => {
+    const url = new URL(window.location);
+    if (!url.searchParams.has('__theme')) {
+        url.searchParams.set('__theme', 'light');
+        window.location.href = url.href;
+    }
+}
+"""
+
+with gr.Blocks(theme=GRADIO_THEME, css=CUSTOM_CSS, js=FORCE_LIGHT_THEME_JS, title="SQL Autocomplete") as demo:
     gr.Markdown("## SQL Autocomplete", elem_id="title-markdown")
     gr.Markdown("Enter your partial SQL query to get autocomplete suggestions.", elem_id="subtitle-markdown")
 

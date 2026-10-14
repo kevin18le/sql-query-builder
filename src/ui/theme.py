@@ -31,6 +31,17 @@ GRADIO_THEME = gr.themes.Base(
     block_label_text_color="#334155",
     block_info_text_color="#64748B",
     block_title_text_color="#1E293B",
+    # Keep the light palette even when the OS/browser prefers dark mode,
+    # so dark Gradio components never mix with the light custom CSS.
+    body_background_fill_dark="#FAFBFC",
+    block_background_fill_dark="#FFFFFF",
+    input_background_fill_dark="#FFFFFF",
+    body_text_color_dark="#334155",
+    body_text_color_subdued_dark="#64748B",
+    block_label_text_color_dark="#334155",
+    block_info_text_color_dark="#64748B",
+    block_title_text_color_dark="#1E293B",
+    border_color_primary_dark="#E6EAF4",
 )
 
 
