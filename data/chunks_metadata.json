@@ -130,9 +130,9 @@
   {
     "type": "table_overview",
     "table_name": "cards",
-    "content": "Table: cards\nRow count: 65\n\nPrimary key(s): card_id",
+    "content": "Table: cards\nRow count: 130\n\nPrimary key(s): card_id",
     "metadata": {
-      "row_count": 65,
+      "row_count": 130,
       "primary_keys": [
         "card_id"
       ],
@@ -353,9 +353,9 @@
   {
     "type": "table_overview",
     "table_name": "merchants",
-    "content": "Table: merchants\nRow count: 5\n\nPrimary key(s): merchant_id",
+    "content": "Table: merchants\nRow count: 10\n\nPrimary key(s): merchant_id",
     "metadata": {
-      "row_count": 5,
+      "row_count": 10,
       "primary_keys": [
         "merchant_id"
       ],
@@ -422,9 +422,9 @@
   {
     "type": "table_overview",
     "table_name": "transactions",
-    "content": "Table: transactions\nRow count: 98\n\nPrimary key(s): transaction_id",
+    "content": "Table: transactions\nRow count: 251\n\nPrimary key(s): transaction_id",
     "metadata": {
-      "row_count": 98,
+      "row_count": 251,
       "primary_keys": [
         "transaction_id"
       ],

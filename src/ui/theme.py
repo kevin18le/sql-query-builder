@@ -28,6 +28,9 @@ GRADIO_THEME = gr.themes.Base(
     border_color_primary="#E6EAF4",
     body_text_color="#334155",
     body_text_color_subdued="#64748B",
+    block_label_text_color="#334155",
+    block_info_text_color="#64748B",
+    block_title_text_color="#1E293B",
 )
 
 
@@ -225,25 +228,61 @@ button.primary:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(103, 32, 255, 0.25) !important;
 }
-/* Label and info text styling - make them white/light for readability */
+/* Contrast fixes: keep all label, info, and example text dark on light surfaces */
 .gr-form label,
 .gr-form .label-wrap,
 .gr-form .wrap label,
 .gr-form .wrap .label-wrap,
+label span,
+.svelte-1gfkn6j,
+label {
+    color: #334155 !important;
+}
 .gr-form .info,
 .gr-form [class*="info"],
-.gr-form .wrap .info,
-.gr-form .wrap label ~ .info,
-.gr-form label ~ span[class*="info"],
-.gr-form .wrap > .info,
-.gr-form .wrap > label ~ .info,
 span[class*="info"],
-.gr-form span[class*="info-text"],
-.gr-form .wrap > div > .info,
-.gr-form .wrap > div > label ~ .info,
-.gr-form .wrap label + .info,
-.gr-form .wrap .label-wrap ~ .info {
-    color: #FFFFFF !important;
+.gr-form .wrap .info {
+    color: #64748B !important;
     opacity: 1 !important;
+}
+/* Example dataset rows: dark text on white */
+.examples .gr-samples-table td,
+.examples .gr-samples-table th,
+.gr-samples-table td,
+.gr-samples-table tr,
+table td,
+.samples-table td,
+.gr-samples-text {
+    color: #334155 !important;
+    background: #FFFFFF !important;
+}
+/* Panels and groups stay on the light surface */
+.gr-group,
+.gr-panel,
+.gr-box,
+.gr-form,
+.block.padded {
+    background: #FFFFFF !important;
+    color: #334155 !important;
+}
+/* Number/checkbox inputs: dark text on light input background */
+input[type="number"],
+input[type="text"],
+textarea {
+    color: #1E293B !important;
+    background: #FFFFFF !important;
+}
+/* Checkbox label */
+.gr-checkbox label,
+.gr-check-radio label,
+input[type="checkbox"] + span,
+input[type="checkbox"] ~ span {
+    color: #334155 !important;
+}
+/* Headings inside groups */
+.gr-group h3,
+.gr-group .markdown h3,
+.gr-panel h3 {
+    color: #1E293B !important;
 }
 """

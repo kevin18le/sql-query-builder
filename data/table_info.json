@@ -223,7 +223,7 @@
         "definition": "CREATE INDEX idx_cards_account_id ON public.cards USING btree (account_id)"
       }
     ],
-    "row_count": 65
+    "row_count": 130
   },
   {
     "table_name": "customers",
@@ -410,7 +410,7 @@
         "definition": "CREATE UNIQUE INDEX merchants_pkey ON public.merchants USING btree (merchant_id)"
       }
     ],
-    "row_count": 5
+    "row_count": 10
   },
   {
     "table_name": "transactions",
@@ -552,6 +552,6 @@
         "definition": "CREATE INDEX idx_tx_merchant_created_at ON public.transactions USING btree (merchant_id, created_at DESC)"
       }
     ],
-    "row_count": 98
+    "row_count": 251
   }
 ]

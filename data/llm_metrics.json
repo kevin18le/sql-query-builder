@@ -637,5 +637,14 @@
     "input_tokens": 130,
     "output_tokens": 83,
     "total_tokens": 213
+  },
+  {
+    "timestamp": "2026-10-13T17:29:39.984891",
+    "model": "accounts/fireworks/models/glm-5p3-flash",
+    "time_to_complete_seconds": 5.0342,
+    "time_to_first_token_seconds": 0.439,
+    "input_tokens": 2001,
+    "output_tokens": 513,
+    "total_tokens": 2514
   }
 ]

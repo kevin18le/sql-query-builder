@@ -118,5 +118,11 @@
     "input_sql": "-- monthly credit card spend per month per merchant category\nSELECT\n    c.customer_id,\n    c.full_name,\n    date_trunc('month', t.created_at)::date               AS month,\n    m.category                                            AS merchant_category,\n    SUM(CASE WHEN t.amount < 0 THEN -t.amount ELSE 0 END) AS total_spend,\n    COUNT(*)                                              AS num_transactions\nFROM customers c\nJOIN accounts a       ON a.customer_id = c.customer_id",
     "suggested_completion": "JOIN transactions t ON t.account_id = a.account_id\nJOIN merchants m ON m.merchant_id = t.merchant_id\nWHERE t.transaction_type = 'card'\nGROUP BY c.customer_id, c.full_name, month, m.category\nORDER BY c.customer_id, month;",
     "applied_autocomplete": 1
+  },
+  {
+    "timestamp": "2026-10-13T17:30:04.400194",
+    "input_sql": "--Give me a 360\u00b0 customer summary showing PII (name, email, city, state), number of accounts, total balances, number of transactions, and their most recent transaction date. Sort by total balance descending.\nSELECT\n    c.customer_id,\n    c.full_name,\n    c.email,\n    c.city,\n    c.state,\n    COUNT(DISTINCT a.account_id)                                   AS num_accounts,\n    SUM(a.current_balance)                                         AS total_current_balance,\n    COUNT(DISTINCT t.transaction_id)                               AS num_transactions,\n    MAX(t.created_at)                                              AS last_transaction_at",
+    "suggested_completion": "\nFROM customers c\nLEFT JOIN accounts a\n    ON a.customer_id = c.customer_id\nLEFT JOIN transactions t\n    ON t.account_id = a.account_id\nGROUP BY\n    c.customer_id,\n    c.full_name,\n    c.email,\n    c.city,\n    c.state\nORDER BY\n    total_current_balance DESC;",
+    "applied_autocomplete": 1
   }
 ]
