@@ -209,3 +209,12 @@ __marimo__/
 # Generated data files
 # data/
 # *.faiss
+
+# Runtime logs and generated exports (recreated by the app on demand)
+data/interactions.json
+data/llm_metrics.json
+data/interactions_export_*.jsonl
+data/llm_metrics_export_*.json
+data/llm_metrics_export_*.csv
+eval/eval_report_*.json
+eval/eval_report_*.md
